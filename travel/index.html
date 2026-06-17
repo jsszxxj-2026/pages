@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>西双版纳 & 普洱 · 8天7晚家庭旅行计划</title>
+<link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.css" />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;0,900;1,500&family=Noto+Serif+SC:wght@400;500;700;900&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green-deep: #1a5632;
+  --green-mid: #2d7a47;
+  --green-light: #4a9e69;
+  --gold: #c8943e;
+  --gold-light: #e8c97a;
+  --amber: #d4782f;
+  --terra: #b85c38;
+  --cream: #fdf8f0;
+  --cream-dark: #f5ecd7;
+  --brown-dark: #3d2b1f;
+  --brown-mid: #5c4033;
+  --text: #2c2416;
+  --text-light: #6b5e4e;
+  --white: #fffef9;
+  --card-shadow: 0 4px 24px rgba(61,43,31,0.08);
+  --card-hover-shadow: 0 12px 40px rgba(61,43,31,0.14);
+  --radius: 16px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans SC', -apple-system, sans-serif;
+  background: var(--cream);
+  color: var(--text);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* ── Hero ── */
+.hero {
+  position: relative; min-height: 100vh; display: flex;
+  align-items: center; justify-content: center;
+  background: linear-gradient(165deg, #0d2e1a 0%, #1a4a2c 30%, #2d6b3f 60%, #3d7840 100%);
+  overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 20% 80%, rgba(200,148,62,0.15) 0%, transparent 60%),
+              radial-gradient(ellipse 60% 40% at 80% 20%, rgba(232,201,122,0.1) 0%, transparent 50%);
+  z-index: 1;
+}
+.hero-palm {
+  position: absolute; font-size: 18rem; opacity: 0.06; z-index: 0;
+  animation: sway 8s ease-in-out infinite;
+}
+.hero-palm:nth-child(1) { top: -5%; left: -3%; }
+.hero-palm:nth-child(2) { bottom: -8%; right: -5%; animation-delay: 4s; transform: scaleX(-1); }
+@keyframes sway {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+.hero-content { position: relative; z-index: 2; text-align: center; padding: 2rem; }
+.hero-badge {
+  display: inline-block; background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px; padding: 0.5rem 1.5rem; color: var(--gold-light);
+  font-size: 0.9rem; letter-spacing: 0.15em; margin-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out;
+}
+.hero h1 {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: clamp(2.8rem, 7vw, 5.5rem); font-weight: 900;
+  color: #fff; line-height: 1.15; letter-spacing: 0.02em;
+  animation: fadeInUp 0.8s ease-out 0.1s both;
+}
+.hero h1 em { font-style: italic; font-weight: 500; color: var(--gold-light); }
+.hero-sub {
+  color: rgba(255,255,255,0.7); font-size: 1.15rem;
+  margin-top: 1.5rem; animation: fadeInUp 0.8s ease-out 0.2s both;
+}
+.hero-meta {
+  display: flex; gap: 2rem; justify-content: center; margin-top: 2.5rem;
+  flex-wrap: wrap; animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+.hero-meta-item {
+  display: flex; align-items: center; gap: 0.6rem;
+  color: rgba(255,255,255,0.8); font-size: 0.95rem;
+}
+.hero-meta-item .icon {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: rgba(255,255,255,0.1); display: flex;
+  align-items: center; justify-content: center; font-size: 1.2rem;
+}
+.scroll-hint {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  z-index: 2; animation: bounce 2s ease-in-out infinite;
+}
+.scroll-hint span {
+  display: block; width: 30px; height: 50px;
+  border: 2px solid rgba(255,255,255,0.3); border-radius: 15px; position: relative;
+}
+.scroll-hint span::after {
+  content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 10px; background: rgba(255,255,255,0.5);
+  border-radius: 2px; animation: scrollDot 2s ease-in-out infinite;
+}
+@keyframes scrollDot {
+  0%, 100% { top: 8px; opacity: 1; }
+  50% { top: 28px; opacity: 0.3; }
+}
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Nav ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(253,248,240,0.85); backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(61,43,31,0.06);
+  padding: 0.75rem 2rem; display: flex; gap: 1.5rem;
+  justify-content: center; flex-wrap: wrap;
+}
+.nav a {
+  color: var(--brown-mid); text-decoration: none; font-size: 0.9rem;
+  font-weight: 500; padding: 0.35rem 0.75rem; border-radius: 100px; transition: all 0.3s;
+}
+.nav a:hover, .nav a.active { background: var(--green-deep); color: #fff; }
+
+/* ── Section ── */
+.section { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+.section-header { text-align: center; margin-bottom: 3rem; }
+.section-tag {
+  display: inline-block; background: var(--green-deep); color: var(--gold-light);
+  font-size: 0.8rem; letter-spacing: 0.12em; padding: 0.3rem 1rem;
+  border-radius: 100px; margin-bottom: 1rem; text-transform: uppercase;
+}
+.section-title {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: clamp(2rem, 4vw, 3rem); font-weight: 900;
+  color: var(--brown-dark); line-height: 1.3;
+}
+.section-title em { font-style: italic; font-weight: 500; color: var(--green-mid); }
+
+/* ── Overview ── */
+.overview-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.overview-card {
+  background: var(--white); border-radius: var(--radius); padding: 2rem 1.5rem;
+  text-align: center; box-shadow: var(--card-shadow);
+  border: 1px solid rgba(61,43,31,0.04); transition: all 0.3s;
+}
+.overview-card:hover { transform: translateY(-4px); box-shadow: var(--card-hover-shadow); }
+.overview-card .o-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+.overview-card .o-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: var(--green-deep); }
+.overview-card .o-label { color: var(--text-light); font-size: 0.9rem; margin-top: 0.25rem; }
+
+/* ── Dual Map ── */
+.map-section { padding: 0 2rem 5rem; max-width: 1300px; margin: 0 auto; }
+.map-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+}
+.map-panel {
+  background: var(--white); border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--card-shadow); border: 1px solid rgba(61,43,31,0.04);
+}
+.map-panel-header {
+  padding: 1rem 1.5rem; display: flex; align-items: center;
+  gap: 0.6rem; border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.map-panel-header .mph-icon { font-size: 1.5rem; }
+.map-panel-header h3 {
+  font-family: 'Playfair Display', 'Noto Serif SC', serif;
+  font-size: 1.15rem; font-weight: 700; color: var(--brown-dark);
+}
+.map-panel-header .mph-badge {
+  margin-left: auto; font-size: 0.75rem; background: var(--cream-dark);
+  color: var(--text-light); padding: 0.2rem 0.6rem; border-radius: 100px;
+}
+.map-panel .map-wrapper { height: 480px; }
+.map-panel .map-wrapper > div { height: 100% !important; width: 100% !important; }
+.map-legend {
+  display: flex; gap: 1.2rem; justify-content: center;
+  margin-top: 1.25rem; flex-wrap: wrap;
+}
+.map-legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; color: var(--text-light); }
+.legend-dot { width: 11px; height: 11px; border-radius: 50%; }
+.legend-dot.attraction { background: var(--amber); }
+.legend-dot.hotel { background: var(--green-mid); }
+.legend-dot.airport { background: #666; }
+
+/* ── Day Cards ── */
+.day-grid { display: grid; gap: 2rem; }
+.day-card {
+  background: var(--white); border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--card-shadow); border: 1px solid rgba(61,43,31,0.04);
+  display: grid; grid-template-columns: 200px 1fr; transition: all 0.3s;
+}
+.day-card:hover { transform: translateY(-2px); box-shadow: var(--card-hover-shadow); }
+.day-card-left {
+  background: linear-gradient(160deg, var(--green-deep), var(--green-mid));
+  padding: 2rem 1.5rem; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; color: #fff; text-align: center;
+}
+.day-number { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; line-height: 1; opacity: 0.9; }
+.day-date { font-size: 0.85rem; opacity: 0.75; margin-top: 0.5rem; }
+.day-theme { font-size: 0.8rem; background: rgba(255,255,255,0.15); border-radius: 100px; padding: 0.25rem 0.8rem; margin-top: 1rem; }
+.day-card-right { padding: 2rem; }
+.day-title { font-family: 'Playfair Display', 'Noto Serif SC', serif; font-size: 1.5rem; font-weight: 700; color: var(--brown-dark); margin-bottom: 1rem; }
+.day-schedule { display: flex; flex-direction: column; gap: 1rem; }
+.schedule-item { display: flex; gap: 0.75rem; align-items: flex-start; }
+.schedule-time { background: var(--cream-dark); color: var(--brown-mid); font-size: 0.8rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 6px; white-space: nowrap; min-width: 52px; text-align: center; }
+.schedule-content h4 { font-size: 0.95rem; color: var(--brown-dark); }
+.schedule-content p { font-size: 0.85rem; color: var(--text-light); margin-top: 0.15rem; }
+.attraction-link { display: inline-flex; align-items: center; gap: 0.3rem; color: var(--amber); font-size: 0.8rem; text-decoration: none; font-weight: 500; margin-top: 0.3rem; transition: color 0.2s; }
+.attraction-link:hover { color: var(--terra); }
+.drive-badge { display: inline-flex; align-items: center; gap: 0.3rem; background: var(--cream-dark); color: var(--brown-mid); font-size: 0.8rem; padding: 0.25rem 0.7rem; border-radius: 100px; margin-top: 0.5rem; }
+.effort { font-size: 0.8rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 100px; margin-left: 0.4rem; white-space: nowrap; vertical-align: middle; }
+.effort-easy { background: #e8f5e9; color: #2e7d32; }
+.effort-mid { background: #fff3e0; color: #e65100; }
+.flow-note { display: block; font-size: 0.78rem; color: var(--green-mid); font-weight: 600; margin-top: 0.3rem; }
+
+/* ── Kid Highlights ── */
+.kid-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin-top: 2rem; }
+.kid-card {
+  background: var(--white); border-radius: var(--radius); padding: 1.5rem;
+  box-shadow: var(--card-shadow); border: 1px solid rgba(61,43,31,0.04);
+  position: relative; overflow: hidden; transition: all 0.3s;
+}
+.kid-card:hover { transform: translateY(-2px); box-shadow: var(--card-hover-shadow); }
+.kid-card .kc-star {
+  position: absolute; top: 12px; right: 14px;
+  font-size: 1.2rem; opacity: 0.6;
+}
+.kid-card .kc-emoji { font-size: 2rem; display: block; margin-bottom: 0.5rem; }
+.kid-card h4 { font-size: 1rem; color: var(--brown-dark); margin-bottom: 0.35rem; }
+.kid-card .kc-reason { font-size: 0.82rem; color: var(--text-light); line-height: 1.6; }
+.kid-card .kc-badge {
+  display: inline-block; font-size: 0.72rem; padding: 0.15rem 0.5rem;
+  border-radius: 100px; margin-top: 0.5rem;
+}
+.kid-card .kc-badge.in { background: #e8f5e9; color: #2e7d32; }
+.kid-card .kc-badge.opt { background: #fff3e0; color: #e65100; }
+
+/* ── Hotels ── */
+.hotel-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 1.5rem; }
+.hotel-card {
+  background: var(--white); border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--card-shadow); border: 1px solid rgba(61,43,31,0.04); transition: all 0.3s;
+}
+.hotel-card:hover { transform: translateY(-3px); box-shadow: var(--card-hover-shadow); }
+.hotel-card-header { padding: 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.04); }
+.hotel-name { font-family: 'Playfair Display', 'Noto Serif SC', serif; font-size: 1.3rem; font-weight: 700; color: var(--brown-dark); }
+.hotel-location { display: flex; align-items: center; gap: 0.4rem; color: var(--text-light); font-size: 0.85rem; margin-top: 0.4rem; }
+.hotel-card-body { padding: 1.5rem; }
+.hotel-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+.hotel-tag { background: var(--cream-dark); color: var(--brown-mid); font-size: 0.78rem; padding: 0.25rem 0.7rem; border-radius: 100px; }
+.hotel-price { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: var(--terra); margin: 0.75rem 0; }
+.hotel-price small { font-size: 0.9rem; font-weight: 400; color: var(--text-light); }
+.hotel-link { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--green-deep); font-size: 0.85rem; text-decoration: none; font-weight: 600; margin-top: 0.5rem; transition: color 0.2s; }
+.hotel-link:hover { color: var(--amber); }
+
+/* ── Transport ── */
+.transport-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
+.transport-card {
+  background: var(--white); border-radius: var(--radius); padding: 2rem;
+  box-shadow: var(--card-shadow); border: 1px solid rgba(61,43,31,0.04); text-align: center;
+}
+.transport-card .t-icon { font-size: 3rem; margin-bottom: 1rem; }
+.transport-card h3 { font-family: 'Playfair Display', 'Noto Serif SC', serif; font-size: 1.3rem; color: var(--brown-dark); margin-bottom: 0.75rem; }
+.transport-card p { font-size: 0.9rem; color: var(--text-light); line-height: 1.7; }
+
+/* ── Tips ── */
+.tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.tip-card { background: var(--white); border-radius: var(--radius); padding: 1.75rem; box-shadow: var(--card-shadow); border: 1px solid rgba(61,43,31,0.04); }
+.tip-card .tip-icon { width: 48px; height: 48px; border-radius: 50%; background: var(--cream-dark); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 1rem; }
+.tip-card h4 { color: var(--brown-dark); margin-bottom: 0.5rem; }
+.tip-card p { font-size: 0.85rem; color: var(--text-light); line-height: 1.7; }
+
+/* ── Footer ── */
+.footer { background: var(--brown-dark); color: rgba(255,255,255,0.7); text-align: center; padding: 3rem 2rem; font-size: 0.85rem; }
+
+/* ── Leaflet ── */
+.leaflet-popup-content { font-family: 'Noto Sans SC', sans-serif; font-size: 0.85rem; line-height: 1.5; min-width: 140px; }
+.leaflet-popup-content strong { color: var(--green-deep); font-size: 0.95rem; }
+.custom-marker {
+  width: 34px; height: 34px; border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg); border: 3px solid #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+.custom-marker.attraction-marker { background: var(--amber); }
+.custom-marker.hotel-marker { background: var(--green-mid); }
+.custom-marker.airport-marker { background: #555; }
+.custom-marker-inner {
+  transform: rotate(45deg); width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; color: #fff;
+}
+.dist-label {
+  background: rgba(255,255,255,0.94); border: 1px solid rgba(0,0,0,0.18);
+  border-radius: 3px; padding: 1px 6px; font-size: 10px;
+  color: #555; white-space: nowrap; font-weight: 600;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .map-grid { grid-template-columns: 1fr; }
+  .map-panel .map-wrapper { height: 380px; }
+}
+@media (max-width: 768px) {
+  .day-card { grid-template-columns: 1fr; }
+  .day-card-left { flex-direction: row; gap: 1rem; padding: 1rem; }
+  .day-number { font-size: 2.5rem; }
+  .hero h1 { font-size: 2.2rem; }
+  .nav { gap: 0.5rem; padding: 0.5rem 0.75rem; }
+  .nav a { font-size: 0.75rem; padding: 0.3rem 0.45rem; }
+  .section { padding: 3rem 1rem; }
+  .overview-grid { grid-template-columns: repeat(2, 1fr); }
+  .hero-meta { gap: 1rem; }
+}
+@media (max-width: 480px) {
+  .overview-grid { grid-template-columns: 1fr; }
+  .hotel-grid { grid-template-columns: 1fr; }
+  .transport-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section class="hero">
+  <div class="hero-palm">🌴</div>
+  <div class="hero-palm">🌿</div>
+  <div class="hero-content">
+    <div class="hero-badge">YUNNAN · FAMILY TRIP</div>
+    <h1>西双版纳 <em>&</em><br>普洱</h1>
+    <p class="hero-sub">一家四口 · 热带雨林与茶马古道的 8 天慢旅行</p>
+    <div class="hero-meta">
+      <div class="hero-meta-item"><div class="icon">📅</div><span>7月4日 — 7月11日 · 2026</span></div>
+      <div class="hero-meta-item"><div class="icon">👨‍👩‍👧‍👦</div><span>一家四口 · 亲子旅行</span></div>
+      <div class="hero-meta-item"><div class="icon">🚗</div><span>落地租车自驾 · 约620km</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint"><span></span></div>
+</section>
+
+<!-- ═══════════ NAV ═══════════ -->
+<nav class="nav">
+  <a href="#overview">总览</a>
+  <a href="#map-section">路线地图</a>
+  <a href="#itinerary">每日行程</a>
+  <a href="#hotels">住宿推荐</a>
+  <a href="#transport">交通安排</a>
+  <a href="#tips">出行贴士</a>
+</nav>
+
+<!-- ═══════════ OVERVIEW ═══════════ -->
+<section class="section" id="overview">
+  <div class="section-header">
+    <div class="section-tag">Overview</div>
+    <h2 class="section-title">行程 <em>总览</em></h2>
+  </div>
+  <div class="overview-grid">
+    <div class="overview-card"><div class="o-icon">🗺️</div><div class="o-value">~700km</div><div class="o-label">总自驾里程</div></div>
+    <div class="overview-card"><div class="o-icon">🏞️</div><div class="o-value">9个</div><div class="o-label">核心景点</div></div>
+    <div class="overview-card"><div class="o-icon">🏨</div><div class="o-value">5家</div><div class="o-label">精选酒店（¥500档）</div></div>
+    <div class="overview-card"><div class="o-icon">🌡️</div><div class="o-value">24-33°C</div><div class="o-label">七月均温</div></div>
+  </div>
+</section>
+
+<!-- ═══════════ KID HIGHLIGHTS ═══════════ -->
+<div style="max-width:1200px;margin:0 auto;padding:0 2rem 3rem;">
+  <div class="section-header" style="margin-bottom:1.5rem;">
+    <div class="section-tag">For Kids</div>
+    <h2 class="section-title" style="font-size:1.8rem;">🐣 小朋友 <em>最爱的</em> 景点</h2>
+    <p style="color:var(--text-light);margin-top:0.35rem;">🟢 绿色标签 = 已安排在行程中 &nbsp;|&nbsp; 🟠 橙色标签 = 可选加入</p>
+  </div>
+  <div class="kid-grid">
+    <div class="kid-card">
+      <div class="kc-star">🥇</div>
+      <span class="kc-emoji">🐘</span>
+      <h4>野象谷 <span class="kc-badge in">✅ 已安排 D5</span></h4>
+      <div class="kc-reason">喂大象、看大象表演、高空观象栈道。全世界也没几个地方能这么近看野生亚洲象，孩子终生难忘。</div>
+    </div>
+    <div class="kid-card">
+      <div class="kc-star">🥈</div>
+      <span class="kc-emoji">🦏</span>
+      <h4>太阳河森林公园 <span class="kc-badge in">✅ 已安排 D6</span></h4>
+      <div class="kc-reason">亲手摸小熊猫、喂白犀牛、看蜂猴长臂猿。动物互动满分，玩到不想走。</div>
+    </div>
+    <div class="kid-card">
+      <div class="kc-star">🥉</div>
+      <span class="kc-emoji">🦚</span>
+      <h4>原始森林公园 <span class="kc-badge opt">⬜ 可选 D2下午</span></h4>
+      <div class="kc-reason">百只孔雀同时放飞超震撼！丛林飞跃 A 线 4 岁就能玩。距市区仅 8km，门票¥45。D2下午如果不想只在酒店，这里是遛娃首选。</div>
+    </div>
+    <div class="kid-card">
+      <span class="kc-emoji">🏘️</span>
+      <h4>傣族园 <span class="kc-badge in">✅ 已安排 D4</span></h4>
+      <div class="kc-reason">天天泼水节！没有孩子能拒绝玩水。傣家竹楼、孔雀舞，沉浸式民族体验。</div>
+    </div>
+    <div class="kid-card">
+      <span class="kc-emoji">🌿</span>
+      <h4>热带植物园 <span class="kc-badge in">✅ 已安排 D3</span></h4>
+      <div class="kc-reason">坐王莲！小朋友可坐在巨型荷叶上拍照。跳舞草、含羞草、食虫植物，像魔法森林。</div>
+    </div>
+    <div class="kid-card">
+      <span class="kc-emoji">🎢</span>
+      <h4>融创水世界 <span class="kc-badge opt">⬜ 可选替换</span></h4>
+      <div class="kc-reason">大型水上乐园，夏天玩水天堂。如果太热想换个玩法，可替换 D4 下午。门票约¥180/人。</div>
+    </div>
+    <div class="kid-card">
+      <span class="kc-emoji">🌲</span>
+      <h4>望天树景区 <span class="kc-badge opt">⬜ 可选替换</span></h4>
+      <div class="kc-reason">36米空中树冠走廊，在雨林之巅行走！但距景洪约3h车程，需一整天，可与植物园二选一。</div>
+    </div>
+    <div class="kid-card">
+      <span class="kc-emoji">🌃</span>
+      <h4>星光夜市 <span class="kc-badge in">✅ 多晚可逛</span></h4>
+      <div class="kc-reason">亚洲最大夜市之一，灯火璀璨像童话世界。小吃、手工艺品，每晚逛不重样。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ DUAL MAP ═══════════ -->
+<section class="map-section" id="map-section">
+  <div class="section-header">
+    <div class="section-tag">Route Map</div>
+    <h2 class="section-title">路线 <em>示意图</em></h2>
+    <p style="color:var(--text-light);margin-top:0.35rem;">西双版纳（景洪）和普洱（思茅）分开展示，线段标注驾车距离</p>
+  </div>
+  <div class="map-grid">
+    <!-- 西双版纳 -->
+    <div class="map-panel">
+      <div class="map-panel-header">
+        <span class="mph-icon">🌴</span>
+        <h3>西双版纳 · 景洪及周边</h3>
+        <span class="mph-badge">D1 — D4 · D8</span>
+      </div>
+      <div class="map-wrapper"><div id="map-banna"></div></div>
+    </div>
+    <!-- 普洱 -->
+    <div class="map-panel">
+      <div class="map-panel-header">
+        <span class="mph-icon">🍵</span>
+        <h3>普洱 · 思茅及周边</h3>
+        <span class="mph-badge">D5 — D7</span>
+      </div>
+      <div class="map-wrapper"><div id="map-puer"></div></div>
+    </div>
+  </div>
+  <div class="map-legend">
+    <div class="map-legend-item"><span class="legend-dot attraction"></span> 景点</div>
+    <div class="map-legend-item"><span class="legend-dot hotel"></span> 酒店/住宿</div>
+    <div class="map-legend-item"><span class="legend-dot airport"></span> 机场</div>
+    <div class="map-legend-item" style="margin-left:0.5rem;">|</div>
+    <div class="map-legend-item">📏 路段标注距离</div>
+    <div class="map-legend-item" style="margin-left:0.5rem;">|</div>
+    <div class="map-legend-item">🚗 版纳 ⇄ 普洱 210km</div>
+  </div>
+</section>
+
+<!-- ═══════════ ITINERARY ═══════════ -->
+<section class="section" id="itinerary">
+  <div class="section-header">
+    <div class="section-tag">Itinerary</div>
+    <h2 class="section-title">每日 <em>行程</em></h2>
+  </div>
+  <div class="day-grid">
+
+    <!-- Day 1 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">01</div><div class="day-date">7月4日 · 周六</div><div class="day-theme">抵达</div></div>
+      <div class="day-card-right">
+        <div class="day-title">✈️ 苏州出发 → 抵达西双版纳 · <span class="effort effort-easy">😊 轻松</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">上午</span><div class="schedule-content"><h4>苏州 → 上海/无锡机场</h4><p>高铁约30-60分钟抵达出发机场，建议选择早班机</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">飞行</span><div class="schedule-content"><h4>飞抵西双版纳嘎洒机场 (JHG)</h4><p>航程约3.5-4小时（多数经昆明中转），抵达后机场租车点取车</p><span class="drive-badge">🚗 机场 → 告庄 10km / 15min</span></div></div>
+          <div class="schedule-item"><span class="schedule-time">傍晚</span><div class="schedule-content"><h4>入住告庄酒店 · 星光夜市初探</h4><p>安顿后步行前往告庄星光夜市，品尝傣味烧烤、老挝冰咖啡、舂鸡脚</p><a class="attraction-link" href="https://you.ctrip.com/sight/jinghong2154/1787234.html" target="_blank">🔗 携程评价 →</a></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 2 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">02</div><div class="day-date">7月5日 · 周日</div><div class="day-theme">古城</div></div>
+      <div class="day-card-right">
+        <div class="day-title">🏯 曼听公园 + 告庄慢时光 · <span class="effort effort-easy">😊 轻松</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">09:00</span><div class="schedule-content"><h4>🚗 告庄 → 曼听公园（3km / 10min）</h4><p>市区短途，睡到自然醒再出发</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">09:30</span><div class="schedule-content"><h4>🏯 曼听公园 + 总佛寺</h4><p>1300年傣王御花园，傣式宫殿、放生湖、总佛寺一票通览。慢逛2-3小时足够。门票约¥40/人。</p><a class="attraction-link" href="https://you.ctrip.com/sight/jinghong2154/4088.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">12:30</span><div class="schedule-content"><h4>🥗 市区午餐</h4><p>推荐附近傣味餐厅：香茅草烤鱼、菠萝紫米饭</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">14:00</span><div class="schedule-content"><h4>🏊 酒店泳池 / 告庄自由探索</h4><p>下午回酒店休息，泳池玩水，或告庄闲逛拍照。为明天植物园储备体力。</p><p class="flow-note">💡 想遛娃？原始森林公园（8km/15min）孔雀放飞+丛林飞跃，详见上方「小朋友最爱的景点」</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">19:00</span><div class="schedule-content"><h4>🌃 星光夜市深度逛</h4><p>今晚可以慢慢逛，推荐：傣味烧烤、老挝冰咖啡、舂鸡脚、夜市拍照</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 3 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">03</div><div class="day-date">7月6日 · 周一</div><div class="day-theme">植物</div></div>
+      <div class="day-card-right">
+        <div class="day-title">🌿 中科院西双版纳热带植物园 · <span class="effort effort-mid">🚶 中等</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">08:00</span><div class="schedule-content"><h4>🚗 告庄 → 勐仑植物园（65km / 1h）</h4><p>沿小磨公路东行，沿途热带田园风光</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">全天</span><div class="schedule-content"><h4>🌿 中科院西双版纳热带植物园</h4><p>国家5A级景区，占地1125公顷，收集13000+种植物。必看：王莲池（孩子可体验坐王莲）、百花园、奇花异卉园。建议租电瓶车¥50/人。</p><a class="attraction-link" href="https://you.ctrip.com/sight/mengla2210/3008.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">17:00</span><div class="schedule-content"><h4>🚗 返回告庄（65km / 1h）</h4><p>途中可在勐仑镇品尝傣家农家菜</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 4 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">04</div><div class="day-date">7月7日 · 周二</div><div class="day-theme">文化</div></div>
+      <div class="day-card-right">
+        <div class="day-title">🏘️ 傣族园 + 澜沧江畔休闲 · <span class="effort effort-easy">😊 轻松</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">09:00</span><div class="schedule-content"><h4>🚗 告庄 → 傣族园（32km / 40min）</h4></div></div>
+          <div class="schedule-item"><span class="schedule-time">10:00</span><div class="schedule-content"><h4>🏘️ 傣族园 — 橄榄坝傣家村寨</h4><p>五个保存完好的傣族村寨，体验天天泼水节、傣家竹楼参观、歌舞表演。门票约¥45/人。</p><a class="attraction-link" href="https://you.ctrip.com/sight/jinghong2154/3006.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">15:00</span><div class="schedule-content"><h4>🚗 返回告庄（32km / 40min）</h4></div></div>
+          <div class="schedule-item"><span class="schedule-time">16:00</span><div class="schedule-content"><h4>🌊 澜沧江畔漫步 · 江边夜市</h4><p>沿澜沧江漫步感受江风，傍晚逛本地江边夜市，物价更亲民</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 5 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">05</div><div class="day-date">7月8日 · 周三</div><div class="day-theme">转场</div></div>
+      <div class="day-card-right">
+        <div class="day-title">🐘 野象谷（顺路）→ 普洱 · <span class="effort effort-mid">🚗 中等</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">08:00</span><div class="schedule-content"><h4>🚗 告庄 → 野象谷（32km / 40min）</h4><p>沿昆磨高速北上，野象谷恰好位于去普洱的必经之路上 🎯</p><span class="drive-badge">💡 顺路玩！不用像D2那样折返</span></div></div>
+          <div class="schedule-item"><span class="schedule-time">09:00</span><div class="schedule-content"><h4>🐘 野象谷（游玩3-4小时）</h4><p>高空观象栈道、大象学校表演、雨林牧象。门票约¥60/人，儿童半价。玩完在景区附近午餐。</p><a class="attraction-link" href="https://you.ctrip.com/sight/jinghong2154/3009.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">13:00</span><div class="schedule-content"><h4>🚗 野象谷 → 普洱思茅区（178km / 约2.5h）</h4><p>沿昆磨高速继续北上，下午3点半左右抵达</p><span class="drive-badge">🛣️ 全程高速 · 路况良好</span></div></div>
+          <div class="schedule-item"><span class="schedule-time">16:00</span><div class="schedule-content"><h4>🏨 入住普洱酒店 · 思茅老街漫步</h4><p>安顿后轻松逛思茅老街、戴家巷，推荐酸醋米线作晚餐。今天主要是开车+一个景点，节奏刚好。</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 6 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">06</div><div class="day-date">7月9日 · 周四</div><div class="day-theme">森林</div></div>
+      <div class="day-card-right">
+        <div class="day-title">🦏 太阳河森林公园全天 · <span class="effort effort-mid">🚶 中等</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">08:30</span><div class="schedule-content"><h4>🚗 思茅 → 太阳河公园（33km / 40min）</h4></div></div>
+          <div class="schedule-item"><span class="schedule-time">全天</span><div class="schedule-content"><h4>🦏 普洱太阳河国家森林公园</h4><p>国内最大的南亚热带季风常绿阔叶林保护区。近距离接触小熊猫、亚洲犀牛、蜂猴等珍稀动物；丛林穿越、湿地观鸟。亲子体验绝佳！门票约¥100/人+电瓶车¥50/人。</p><a class="attraction-link" href="https://you.ctrip.com/sight/puer928/4476288.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">18:00</span><div class="schedule-content"><h4>🚗 返回思茅（33km / 40min）</h4><p>推荐晚餐：普洱石斛鸡火锅、普洱茶宴</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 7 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">07</div><div class="day-date">7月10日 · 周五</div><div class="day-theme">归程</div></div>
+      <div class="day-card-right">
+        <div class="day-title">🐴 茶马古道 → 🍵 茶博览苑（顺路）→ 回景洪 · <span class="effort effort-mid">🚗 中等</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">08:30</span><div class="schedule-content"><h4>🐴 茶马古道遗址公园（市区3km）</h4><p>就在思茅城区边，乘缆车上山俯瞰普洱全景，走一段真正的千年古道。游玩约1.5-2小时。门票约¥50/人。</p><a class="attraction-link" href="https://you.ctrip.com/sight/puer928/57360.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">11:00</span><div class="schedule-content"><h4>🚗 茶马古道 → 茶博览苑（27km / 30min）</h4><p>茶博览苑位于思茅南郊倚象镇，恰好是回景洪的方向 🎯</p><span class="drive-badge">💡 顺路南下，不走回头路</span></div></div>
+          <div class="schedule-item"><span class="schedule-time">11:30</span><div class="schedule-content"><h4>🍵 中华普洱茶博览苑 + 午餐</h4><p>倚象镇营盘山万亩茶园，体验采茶、制茶、品茶。景区有餐厅可用午餐。门票约¥50/人，游玩约1.5-2小时。</p><a class="attraction-link" href="https://you.ctrip.com/sight/puer928/141425.html" target="_blank">🔗 携程评价 →</a></div></div>
+          <div class="schedule-item"><span class="schedule-time">14:00</span><div class="schedule-content"><h4>🚗 茶博览苑 → 告庄（180km / 约3h）</h4><p>从倚象镇上高速返回景洪，傍晚抵达</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">17:30</span><div class="schedule-content"><h4>告庄最后一夜 · 购买伴手礼</h4><p>推荐：普洱茶饼、傣族织锦、热带水果干、老挝咖啡</p></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Day 8 -->
+    <div class="day-card">
+      <div class="day-card-left"><div class="day-number">08</div><div class="day-date">7月11日 · 周六</div><div class="day-theme">返程</div></div>
+      <div class="day-card-right">
+        <div class="day-title">✈️ 西双版纳 → 苏州 · 温暖归家 · <span class="effort effort-easy">😊 轻松</span></div>
+        <div class="day-schedule">
+          <div class="schedule-item"><span class="schedule-time">上午</span><div class="schedule-content"><h4>🚗 告庄 → 机场还车（10km / 15min）</h4><p>提前2小时抵达嘎洒机场，神州/一嗨机场店还车</p></div></div>
+          <div class="schedule-item"><span class="schedule-time">飞行</span><div class="schedule-content"><h4>✈️ 西双版纳 → 上海/无锡 → 苏州</h4><p>航程约3.5-4小时，抵达后高铁回苏州</p></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ HOTELS ═══════════ -->
+<section class="section" id="hotels">
+  <div class="section-header">
+    <div class="section-tag">Accommodation</div>
+    <h2 class="section-title">住宿 <em>推荐</em></h2>
+    <p style="color:var(--text-light);margin-top:0.35rem;">以下价格参考携程/飞猪2026年7月上旬实际报价，具体以预订时为准</p>
+  </div>
+  <div class="hotel-grid">
+
+    <div class="hotel-card">
+      <div class="hotel-card-header">
+        <div class="hotel-name">云朵星畔高空泳池酒店</div>
+        <div class="hotel-location">📍 景洪市 · 告庄西双景核心区</div>
+      </div>
+      <div class="hotel-card-body">
+        <div class="hotel-tags"><span class="hotel-tag">🏊 高空无边泳池</span><span class="hotel-tag">🤖 全屋智能</span><span class="hotel-tag">📸 免费旅拍</span><span class="hotel-tag">🅿️ 免费停车</span><span class="hotel-tag">🍳 含双早</span></div>
+        <p style="font-size:0.85rem;color:var(--text-light);">步行5-8分钟到星光夜市/大金塔。13层网红无边泳池直面日落，全屋智能语音控制，24h免费接机。</p>
+        <div class="hotel-price">¥498-698 <small>/晚（高级双床房）</small></div>
+        <a class="hotel-link" href="https://hotels.ctrip.com/hotels/116452239.html?checkin=2026-07-04&checkout=2026-07-05" target="_blank">🔗 7月价格 →</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-card-header">
+        <div class="hotel-name">雨林秘境·江畔庭院度假美墅</div>
+        <div class="hotel-location">📍 景洪市 · 告庄西双景度假区内</div>
+      </div>
+      <div class="hotel-card-body">
+        <div class="hotel-tags"><span class="hotel-tag">🏡 独栋别墅</span><span class="hotel-tag">🌴 热带庭院</span><span class="hotel-tag">👶 儿童乐园</span><span class="hotel-tag">🚗 专车接机</span><span class="hotel-tag">🌅 江景阳台</span></div>
+        <p style="font-size:0.85rem;color:var(--text-light);">三层独栋别墅带热带庭院，楼下赶摆街步行百米直达大金塔和六国水上市场。配备儿童乐园，亲子家庭首选。</p>
+        <div class="hotel-price">¥450-650 <small>/晚（家庭房）</small></div>
+        <a class="hotel-link" href="https://hotels.ctrip.com/hotels/11465445.html?checkin=2026-07-04&checkout=2026-07-05" target="_blank">🔗 7月价格 →</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-card-header">
+        <div class="hotel-name">景洪黎明·杉月观景美宿</div>
+        <div class="hotel-location">📍 景洪市 · 告庄孔雀楼</div>
+      </div>
+      <div class="hotel-card-body">
+        <div class="hotel-tags"><span class="hotel-tag">🏊 室外泳池</span><span class="hotel-tag">🌃 全景江景</span><span class="hotel-tag">⭐ 4.8分</span><span class="hotel-tag">🛬 接机服务</span><span class="hotel-tag">👨‍👩‍👧‍👦 三床套房</span></div>
+        <p style="font-size:0.85rem;color:var(--text-light);">告庄孔雀楼地标位置，臻选全景三床套房最适合四口之家。配备室外泳池，步行即达星光夜市。</p>
+        <div class="hotel-price">¥380-580 <small>/晚（全景三床套房）</small></div>
+        <a class="hotel-link" href="https://hotels.ctrip.com/hotels/114658493.html?checkin=2026-07-04&checkout=2026-07-05" target="_blank">🔗 7月价格 →</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-card-header">
+        <div class="hotel-name">普洱梅子湖度假酒店</div>
+        <div class="hotel-location">📍 普洱市 · 思茅区梅子湖风景区</div>
+      </div>
+      <div class="hotel-card-body">
+        <div class="hotel-tags"><span class="hotel-tag">⭐ 五星</span><span class="hotel-tag">🏞️ 湖景</span><span class="hotel-tag">♨️ 温泉</span><span class="hotel-tag">🍳 早餐丰盛</span><span class="hotel-tag">⭐ 9.3分</span></div>
+        <p style="font-size:0.85rem;color:var(--text-light);">依梅子湖而建，三面环水一面靠山。4公里湖边木栈道，自助早餐品种丰富。东南亚风情温泉泳池。</p>
+        <div class="hotel-price">¥460-580 <small>/晚（湖景房）</small></div>
+        <a class="hotel-link" href="https://hotels.ctrip.com/hotels/5763322.html?checkin=2026-07-04&checkout=2026-07-05" target="_blank">🔗 7月价格 →</a>
+      </div>
+    </div>
+
+    <div class="hotel-card">
+      <div class="hotel-card-header">
+        <div class="hotel-name">普洱花弄里酒店（戴家巷店）</div>
+        <div class="hotel-location">📍 普洱市 · 思茅区五一路52号</div>
+      </div>
+      <div class="hotel-card-body">
+        <div class="hotel-tags"><span class="hotel-tag">🏯 禅意园林</span><span class="hotel-tag">⭐ 9.2分</span><span class="hotel-tag">🛁 浴缸观星</span><span class="hotel-tag">🍵 普洱茶品饮</span><span class="hotel-tag">📍 老街步行街旁</span></div>
+        <p style="font-size:0.85rem;color:var(--text-light);">"空中园林"，白墙灰瓦融合苏州园林与日式枯山水。配备戴森吹风机，部分房型浴缸临窗观星。下楼即思茅老街。</p>
+        <div class="hotel-price">¥470-550 <small>/晚（禅意大床房）</small></div>
+        <a class="hotel-link" href="https://hotels.ctrip.com/hotels/45997052.html?checkin=2026-07-04&checkout=2026-07-05" target="_blank">🔗 7月价格 →</a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ TRANSPORT ═══════════ -->
+<section class="section" id="transport">
+  <div class="section-header">
+    <div class="section-tag">Transport</div>
+    <h2 class="section-title">交通 <em>安排</em></h2>
+  </div>
+  <div class="transport-grid">
+    <div class="transport-card">
+      <div class="t-icon">✈️</div>
+      <h3>往返航班</h3>
+      <p><strong>去程（7/4）</strong>：苏州 → 上海虹桥/浦东/无锡硕放 ✈ 西双版纳嘎洒<br>多数航班经昆明中转，全程约5-6h，建议选早班机<br>
+      <strong>返程（7/11）</strong>：西双版纳嘎洒 ✈ 上海/无锡 → 苏州</p>
+    </div>
+    <div class="transport-card">
+      <div class="t-icon">🚗</div>
+      <h3>落地租车</h3>
+      <p><strong>推荐平台</strong>：神州租车 / 一嗨租车（嘎洒机场均有门店）<br>
+      <strong>车型建议</strong>：SUV（途观L/CR-V级别），空间大适合家庭<br>
+      <strong>费用参考</strong>：约¥200-350/天（含保险），8天约¥1600-2800<br>
+      <strong>总里程</strong>：约700km，油费约¥450-550</p>
+    </div>
+    <div class="transport-card">
+      <div class="t-icon">📏</div>
+      <h3>自驾里程明细</h3>
+      <p>机场→告庄 10km | 告庄→曼听 3km<br>
+      告庄⇄植物园 130km | 告庄⇄傣族园 64km<br>
+      <strong>告庄→野象谷→普洱 210km（顺路）</strong><br>
+      思茅⇄太阳河 66km | 茶马古道→博览苑→景洪 210km<br>
+      <strong>全程约700km</strong></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ TIPS ═══════════ -->
+<section class="section" id="tips">
+  <div class="section-header">
+    <div class="section-tag">Tips</div>
+    <h2 class="section-title">出行 <em>贴士</em></h2>
+  </div>
+  <div class="tips-grid">
+    <div class="tip-card"><div class="tip-icon">🌦️</div><h4>七月天气</h4><p>西双版纳7月为雨季，日均温24-33°C，阵雨频繁但通常短暂。必备：轻便雨衣、防晒霜、驱蚊液、遮阳帽。普洱气温略低2-3°C更凉爽。</p></div>
+    <div class="tip-card"><div class="tip-icon">👶</div><h4>亲子装备</h4><p>儿童防晒衣、泳衣（酒店泳池/泼水）、儿童雨鞋（雨林徒步）、便携推车（植物园较大）、常用药品（蒙脱石散、退烧药、创可贴）。</p></div>
+    <div class="tip-card"><div class="tip-icon">🍜</div><h4>美食推荐</h4><p>版纳：傣味烧烤、香茅草烤鱼、菠萝紫米饭、老挝冰咖啡、舂鸡脚。普洱：酸醋米线、石斛鸡火锅、普洱茶宴、思茅凉卷粉。</p></div>
+    <div class="tip-card"><div class="tip-icon">💰</div><h4>预算参考</h4><p>机票：约¥6000-10000（4人往返）；租车：约¥2000；住宿：约¥3500（7晚×¥500）；门票+餐饮+其他：约¥4000-6000。<br><strong>总计约 ¥1.6-2.2万</strong></p></div>
+    <div class="tip-card"><div class="tip-icon">📱</div><h4>实用APP</h4><p>高德地图（导航）、携程/飞猪（门票酒店）、大众点评（美食）、墨迹天气（实时天气）、12306（高铁票）。</p></div>
+    <div class="tip-card"><div class="tip-icon">⚠️</div><h4>注意事项</h4><p>① 雨季注意山路落石，避免夜间行车；② 野象谷勿大声喧哗惊吓野象；③ 植物园蚊虫多，务必驱蚊；④ 尊重傣族风俗，进寺庙脱鞋、不摸小和尚头。</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer class="footer">
+  <p>西双版纳 & 普洱 · 8天7晚家庭旅行计划 | 2026年7月4日 — 7月11日</p>
+  <p style="margin-top:0.5rem;opacity:0.5;">酒店价格参考携程/飞猪7月报价 · 路线数据基于实际道路 · 景点评价链接跳转携程</p>
+</footer>
+
+<!-- ═══════════ SCRIPTS ═══════════ -->
+<script src="https://cdn.bootcdn.net/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script>
+// ── 公共工具 ──
+function tileLayer() {
+  return L.tileLayer('https://webrd0{s}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}', {
+    subdomains: ['1','2','3','4'], attribution: '&copy; 高德地图', maxZoom: 18
+  });
+}
+
+function mkMarker(map, lat, lng, type, emoji, name, desc) {
+  const m = L.marker([lat, lng], {
+    icon: L.divIcon({
+      className: '',
+      html: `<div class="custom-marker ${type}-marker"><div class="custom-marker-inner">${emoji}</div></div>`,
+      iconSize: [34, 34], iconAnchor: [17, 34], popupAnchor: [0, -38]
+    })
+  }).addTo(map);
+  if (name) m.bindPopup(`<strong>${name}</strong><br><small>${desc}</small>`);
+  return m;
+}
+
+function drawLine(map, coords, color, weight, dash) {
+  return L.polyline(coords, { color, weight: weight || 3, opacity: 0.78, dashArray: dash || null }).addTo(map);
+}
+
+function addDist(map, from, to, text, color) {
+  const mlat = (from[0] + to[0]) / 2, mlng = (from[1] + to[1]) / 2;
+  const dx = to[1] - from[1], dy = to[0] - from[0];
+  const len = Math.sqrt(dx*dx + dy*dy) || 1;
+  const off = 0.006;
+  L.marker([mlat - (dx/len)*off, mlng + (dy/len)*off], {
+    icon: L.divIcon({ className: '', html: `<span class="dist-label">${text}</span>`, iconSize: [0,0], iconAnchor: [25,7] })
+  }).addTo(map);
+}
+
+// ═══════════ 初始化双地图 ═══════════
+window.addEventListener('load', () => {
+
+// ═══════════ 地图1：西双版纳（景洪） ═══════════
+const mapBanna = L.map('map-banna', { zoomControl: true }).setView([21.92, 100.85], 11);
+tileLayer().addTo(mapBanna);
+
+const amber = '#d4782f', green = '#2d7a47', gold = '#c8943e', terra = '#b85c38', grey = '#888';
+
+// 点位坐标
+const airport   = [21.974, 100.762];
+const gaozhuang = [21.995, 100.812];
+const yexiang   = [22.175, 100.868];
+const manting   = [21.997, 100.798];
+const botanical = [21.936, 101.254];
+const dai       = [21.861, 100.934];
+
+// 标记
+mkMarker(mapBanna, airport[0], airport[1], 'airport', '✈️', '嘎洒机场', '租车取还 · 10km到告庄');
+mkMarker(mapBanna, gaozhuang[0], gaozhuang[1], 'hotel', '🏨', '告庄西双景', '住宿区 · 星光夜市 · 大金塔');
+mkMarker(mapBanna, 22.028, 100.866, 'attraction', '🦚', '原始森林公园', '可选 · 孔雀放飞 · 丛林飞跃 · ¥45');
+mkMarker(mapBanna, 22.000, 100.810, 'hotel', '🛏️', '云朵星畔酒店', '¥498-698 · 高空泳池');
+mkMarker(mapBanna, 21.991, 100.816, 'hotel', '🏡', '雨林秘境美墅', '¥450-650 · 独栋庭院');
+mkMarker(mapBanna, 21.998, 100.808, 'hotel', '🏊', '杉月观景美宿', '¥380-580 · 三床套房');
+mkMarker(mapBanna, yexiang[0], yexiang[1], 'attraction', '🐘', '野象谷', 'D5顺路→普洱 · ¥60');
+mkMarker(mapBanna, manting[0], manting[1], 'attraction', '🏯', '曼听公园', '傣王御花园 · 总佛寺 · ¥40');
+mkMarker(mapBanna, botanical[0], botanical[1], 'attraction', '🌿', '热带植物园', '5A · 13000+植物 · ¥80');
+mkMarker(mapBanna, dai[0], dai[1], 'attraction', '🏘️', '傣族园', '泼水节 · 傣家村寨 · ¥45');
+
+// ── 版纳路线 ──
+// D1: Airport → Gaozhuang
+drawLine(mapBanna, [airport, gaozhuang], gold, 2, '6,4');
+addDist(mapBanna, airport, gaozhuang, '10km', gold);
+
+// D2: Gaozhuang → Manting（市区3km）
+drawLine(mapBanna, [gaozhuang, manting], '#4a9e69', 3);
+addDist(mapBanna, gaozhuang, manting, '3km', '#4a9e69');
+drawLine(mapBanna, [manting, gaozhuang], '#4a9e69', 2, '4,3');
+
+// D3: Gaozhuang → Botanical → Gaozhuang
+drawLine(mapBanna, [gaozhuang, botanical], green, 3);
+addDist(mapBanna, gaozhuang, botanical, '65km', green);
+drawLine(mapBanna, [botanical, gaozhuang], green, 2, '4,3');
+
+// D4: Gaozhuang → Dai → Gaozhuang
+drawLine(mapBanna, [gaozhuang, dai], terra, 3);
+addDist(mapBanna, gaozhuang, dai, '32km', terra);
+drawLine(mapBanna, [dai, gaozhuang], terra, 2, '4,3');
+
+// D5: Gaozhuang → Yexiang（顺路→普洱）
+drawLine(mapBanna, [gaozhuang, yexiang], deep, 4);
+addDist(mapBanna, gaozhuang, yexiang, '32km→普洱', deep);
+
+// D8: Gaozhuang → Airport
+drawLine(mapBanna, [gaozhuang, airport], grey, 2, '6,4');
+
+// 版纳地图范围
+mapBanna.fitBounds([[21.80, 100.72], [22.25, 101.32]], { padding: [15, 15] });
+
+// ═══════════ 地图2：普洱（思茅） ═══════════
+const mapPuer = L.map('map-puer', { zoomControl: true }).setView([22.72, 101.02], 12);
+tileLayer().addTo(mapPuer);
+
+const simao    = [22.785, 100.980];
+const teama    = [22.799, 101.032];
+const sunriver = [22.637, 101.113];
+const teaexpo  = [22.756, 101.055];
+
+// 标记
+mkMarker(mapPuer, simao[0], simao[1], 'hotel', '🏨', '普洱思茅区', '住宿核心 · 餐饮集中');
+mkMarker(mapPuer, 22.778, 100.972, 'hotel', '🏞️', '梅子湖度假酒店', '¥460-580 · 五星湖景');
+mkMarker(mapPuer, 22.781, 100.976, 'hotel', '🏯', '花弄里酒店', '¥470-550 · 禅意园林');
+mkMarker(mapPuer, teama[0], teama[1], 'attraction', '🐴', '茶马古道遗址', '古道 · 缆车 · 4A景区 · ¥50');
+mkMarker(mapPuer, sunriver[0], sunriver[1], 'attraction', '🦏', '太阳河森林公园', '小熊猫 · 犀牛 · ¥100');
+mkMarker(mapPuer, teaexpo[0], teaexpo[1], 'attraction', '🍵', '茶博览苑', '万亩茶园 · 制茶体验 · ¥50');
+
+// ── 普洱路线 ──
+// D5 arrival: no route line needed (arrive by car), just the simao marker
+
+// D6: Simao → Sunriver → Simao
+drawLine(mapPuer, [simao, sunriver], amber, 3);
+addDist(mapPuer, simao, sunriver, '33km', amber);
+drawLine(mapPuer, [sunriver, simao], amber, 2, '4,3');
+
+// D7: Tea Horse Road → Tea Expo → Return to Jinghong
+drawLine(mapPuer, [simao, teama], '#4a9e69', 3); // 早上茶马古道
+addDist(mapPuer, simao, teama, '3km', '#4a9e69');
+drawLine(mapPuer, [teama, teaexpo], terra, 3); // 茶马古道→茶博览苑(顺路南下)
+addDist(mapPuer, teama, teaexpo, '27km→景洪', terra);
+
+// 普洱地图范围
+mapPuer.fitBounds([[22.58, 100.92], [22.85, 101.18]], { padding: [15, 15] });
+
+// 确保两个地图正确渲染
+setTimeout(() => { mapBanna.invalidateSize(); mapPuer.invalidateSize(); }, 300);
+
+}); // end window.load
+
+// ── 滚动监听 ──
+const sections = document.querySelectorAll('section[id], .map-section');
+const navs = document.querySelectorAll('.nav a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  sections.forEach(s => { if (scrollY >= s.offsetTop - 80) cur = s.getAttribute('id'); });
+  navs.forEach(a => { a.classList.toggle('active', a.getAttribute('href') === '#' + cur); });
+});
+
+// ── 渐显动画 ──
+const obs = new IntersectionObserver((es) => {
+  es.forEach(e => { if (e.isIntersecting) { e.target.style.opacity = '1'; e.target.style.transform = 'translateY(0)'; } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.day-card, .hotel-card, .transport-card, .tip-card').forEach(el => {
+  el.style.opacity = '0'; el.style.transform = 'translateY(20px)';
+  el.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>

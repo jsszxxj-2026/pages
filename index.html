@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eric's Pages</title>
+<style>
+:root {
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --running: #22c55e;
+  --travel: #f59e0b;
+  --text: #f1f5f9;
+  --text-sub: #94a3b8;
+  --radius: 20px;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+.container { max-width: 720px; width: 100%; }
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+.header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--running), var(--travel));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 8px;
+}
+.header p {
+  color: var(--text-sub);
+  font-size: 1rem;
+}
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 40px 32px;
+  text-decoration: none;
+  color: var(--text);
+  transition: transform 0.2s, box-shadow 0.2s;
+  border: 2px solid transparent;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+.card.running:hover { border-color: var(--running); }
+.card.travel:hover { border-color: var(--travel); }
+.card .icon {
+  font-size: 3rem;
+  margin-bottom: 16px;
+  display: block;
+}
+.card h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.card p {
+  color: var(--text-sub);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+.card.running h2 { color: var(--running); }
+.card.travel h2 { color: var(--travel); }
+.footer {
+  text-align: center;
+  margin-top: 48px;
+  color: var(--text-sub);
+  font-size: 0.8rem;
+}
+@media (max-width: 600px) {
+  .cards { grid-template-columns: 1fr; }
+  .header h1 { font-size: 2rem; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>Eric's Pages</h1>
+    <p>跑步训练 · 旅行记忆</p>
+  </div>
+  <div class="cards">
+    <a href="running/" class="card running">
+      <span class="icon">🏃</span>
+      <h2>跑步训练计划</h2>
+      <p>24周训练计划 · 1500m & 全马备赛 · 每日课表含配速指导</p>
+    </a>
+    <a href="travel/" class="card travel">
+      <span class="icon">✈️</span>
+      <h2>旅行计划</h2>
+      <p>西双版纳 & 普洱 · 8天7晚 · 家庭深度游</p>
+    </a>
+  </div>
+  <div class="footer">
+    Powered by GitHub Pages
+  </div>
+</div>
+</body>
+</html>
