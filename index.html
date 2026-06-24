@@ -10,6 +10,7 @@
   --card-bg: #1e293b;
   --running: #22c55e;
   --travel: #f59e0b;
+  --kids: #ec4899;
   --text: #f1f5f9;
   --text-sub: #94a3b8;
   --radius: 20px;
@@ -45,7 +46,7 @@ body {
 }
 .cards {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 .card {
@@ -65,6 +66,7 @@ body {
 }
 .card.running:hover { border-color: var(--running); }
 .card.travel:hover { border-color: var(--travel); }
+.card.kids:hover { border-color: var(--kids); }
 .card .icon {
   font-size: 3rem;
   margin-bottom: 16px;
@@ -82,6 +84,7 @@ body {
 }
 .card.running h2 { color: var(--running); }
 .card.travel h2 { color: var(--travel); }
+.card.kids h2 { color: var(--kids); }
 .footer {
   text-align: center;
   margin-top: 48px;
@@ -110,6 +113,11 @@ body {
       <span class="icon">✈️</span>
       <h2>旅行计划</h2>
       <p>西双版纳 & 普洱 · 8天7晚 · 家庭深度游</p>
+    </a>
+    <a href="kids/" class="card kids">
+      <span class="icon">🧒</span>
+      <h2>兜兜运动学院</h2>
+      <p>8周暑假体适能 · 课表+积分+徽章 · 爸爸执行手册</p>
     </a>
   </div>
   <div class="footer">
