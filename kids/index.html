@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>兜兜运动学院 · 爸爸执行手册</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&display=swap');
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    font-family: 'Noto Sans SC', -apple-system, sans-serif;
+    background: #F5F1EA;
+    color: #2D3436;
+    line-height: 1.7;
+    padding: 0;
+  }
+  .page {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: 40px 50px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    border-radius: 0 0 16px 16px;
+  }
+  @media print {
+    body { background: white; }
+    .page { box-shadow:none; margin:0; border-radius:0; page-break-after: always; padding: 30px; }
+  }
+  .hero {
+    background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%);
+    color: white;
+    padding: 48px 50px;
+    border-radius: 16px 16px 0 0;
+    margin: 24px auto 0;
+    max-width: 900px;
+  }
+  .hero h1 { font-size: 2.2em; font-weight: 900; margin-bottom: 8px; }
+  .hero .sub { font-size: 1.1em; opacity: 0.92; }
+  .hero .meta { display:flex; gap:20px; margin-top:16px; font-size:0.9em; opacity:0.9; flex-wrap:wrap; }
+  .hero .meta span { background: rgba(255,255,255,0.2); padding: 4px 14px; border-radius: 20px; }
+  .section { margin-bottom: 36px; }
+  .section-title {
+    font-size: 1.5em; font-weight: 700; color: #2D3436;
+    margin-bottom: 16px; padding-bottom: 8px;
+    border-bottom: 3px solid #FF6B6B;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .week-table { width: 100%; border-collapse: separate; border-spacing: 6px; font-size: 0.92em; }
+  .week-table th { text-align: center; padding: 12px 8px; border-radius: 10px; font-size: 1em; font-weight: 700; }
+  .week-table td { padding: 14px 12px; border-radius: 10px; text-align: center; vertical-align: top; font-size: 0.88em; line-height: 1.8; }
+  .th-train { background: #FF6B6B; color: white; }
+  .th-rest { background: #B2BEC3; color: white; }
+  .th-optional { background: #00B894; color: white; }
+  .td-train { background: #FFF5F0; }
+  .td-rest { background: #F0F0F0; color: #999; }
+  .td-optional { background: #E8FFF5; }
+  .day-card { border-radius: 14px; overflow: hidden; margin-bottom: 20px; border: 2px solid; }
+  .day-card.mon { border-color: #6C5CE7; }
+  .day-card.fri { border-color: #FF6B6B; }
+  .day-card.sat { border-color: #00B894; }
+  .day-card.sun { border-color: #FDCB6E; }
+  .day-header { padding: 12px 20px; color: white; font-weight: 700; font-size: 1.1em; display: flex; justify-content: space-between; align-items: center; }
+  .day-card.mon .day-header { background: #6C5CE7; }
+  .day-card.fri .day-header { background: #FF6B6B; }
+  .day-card.sat .day-header { background: #00B894; }
+  .day-card.sun .day-header { background: #FDCB6E; color: #2D3436; }
+  .day-body { padding: 16px 20px; }
+  .day-body ol { margin: 0; padding-left: 20px; }
+  .day-body ol li { margin-bottom: 8px; }
+  .exercise-line { font-weight: 500; }
+  .prop-tip { font-size: 0.85em; color: #636E72; margin-top: 2px; padding-left: 16px; }
+  .prop-tip::before { content: "🎯 道具版: "; color: #00B894; font-weight: 600; }
+  .rongrong-tip { font-size: 0.85em; color: #E17055; margin-top: 2px; padding-left: 16px; }
+  .rongrong-tip::before { content: "🧸 融融版: "; color: #E17055; font-weight: 600; }
+  .prog-table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+  .prog-table th { background: #2D3436; color: white; padding: 10px; text-align: center; }
+  .prog-table th:first-child { border-radius: 8px 0 0 0; }
+  .prog-table th:last-child { border-radius: 0 8px 0 0; }
+  .prog-table td { padding: 10px; text-align: center; border-bottom: 1px solid #E8E8E8; }
+  .prog-table td:first-child { text-align: left; font-weight: 600; background: #FAFAFA; }
+  .prog-table .stage1 { background: #E8F5E9; }
+  .prog-table .stage2 { background: #FFF3E0; }
+  .prog-table .stage3 { background: #E3F2FD; }
+  .prog-table .stage4 { background: #FCE4EC; }
+  .prog-phase { text-align: center; font-weight: 700; padding: 8px; font-size: 0.9em; }
+  .points-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  .point-card { background: #F8F9FA; border-radius: 10px; padding: 14px; text-align: center; border: 2px solid #E8E8E8; }
+  .point-card .icon { font-size: 1.8em; }
+  .point-card .label { font-size: 0.85em; color: #636E72; margin: 4px 0; }
+  .point-card .pts { font-size: 1.3em; font-weight: 700; color: #FF6B6B; }
+  .badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .badge-item { background: linear-gradient(135deg, #FFEAA7, #FAB1A0); border-radius: 12px; padding: 10px 16px; text-align: center; flex: 1; min-width: 120px; }
+  .badge-item .bi { font-size: 1.6em; }
+  .badge-item .bn { font-size: 0.82em; font-weight: 600; margin-top: 4px; }
+  .badge-item .bc { font-size: 0.75em; color: #636E72; margin-top: 2px; }
+  .safety-box { background: #FFF5F5; border: 2px solid #FF6B6B; border-radius: 12px; padding: 20px; }
+  .safety-box h3 { color: #FF6B6B; margin-bottom: 12px; }
+  .safety-box ol { margin: 0; padding-left: 20px; }
+  .safety-box ol li { margin-bottom: 6px; }
+  .tip-box { background: #E8F8F5; border-left: 4px solid #00B894; border-radius: 8px; padding: 14px 18px; margin: 12px 0; font-size: 0.92em; }
+  .warn-box { background: #FFF8E1; border-left: 4px solid #FDCB6E; border-radius: 8px; padding: 14px 18px; margin: 12px 0; font-size: 0.92em; }
+  .opt-list { counter-reset: opt; list-style: none; padding: 0; }
+  .opt-list li { counter-increment: opt; padding: 14px 14px 14px 50px; margin-bottom: 10px; background: #F8F9FA; border-radius: 10px; position: relative; }
+  .opt-list li::before { content: counter(opt); position: absolute; left: 14px; top: 14px; width: 24px; height: 24px; background: #FF6B6B; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 0.85em; }
+  .opt-list li b { color: #2D3436; }
+  .opt-list li .opt-detail { font-size: 0.9em; color: #636E72; margin-top: 4px; }
+  .checklist-table { width: 100%; border-collapse: separate; border-spacing: 4px; font-size: 0.88em; }
+  .checklist-table th { text-align: center; padding: 8px; border-radius: 8px; color: white; font-weight: 700; }
+  .checklist-table td { padding: 10px 8px; border-radius: 8px; text-align: center; background: #FFF5F0; line-height: 1.9; }
+  hr.divider { border: none; border-top: 2px dashed #E0E0E0; margin: 24px 0; }
+  .small-note { font-size: 0.82em; color: #999; margin-top: 6px; }
+  .back-link { display:inline-block; margin:16px 24px; color:#FF6B6B; text-decoration:none; font-weight:600; font-size:0.9em; }
+</style>
+</head>
+<body>
+<a href="../" class="back-link">← 返回首页</a>
+
+<div class="hero">
+  <h1>兜兜运动学院 · 爸爸执行手册</h1>
+  <div class="sub">8周暑假体适能训练 · 完整课表 + 执行要点 + 优化建议</div>
+  <div class="meta">
+    <span>👦 兜兜 7岁</span>
+    <span>🧸 融融 跟练版</span>
+    <span>📅 每周 3-4 练</span>
+    <span>⏰ 每次 45分钟</span>
+  </div>
+</div>
+
+<div class="page">
+  <div class="section">
+    <div class="section-title">📅 每周课表总览</div>
+    <table class="week-table">
+      <tr>
+        <th class="th-train">周一 🧘</th>
+        <th class="th-rest">周二三四 🚲</th>
+        <th class="th-train">周五 ⚡</th>
+        <th class="th-train">周六 💪</th>
+        <th class="th-optional">周日 🎾</th>
+      </tr>
+      <tr>
+        <td class="td-train"><b>平衡+协调</b><br>慢跑热身<br>① 金鸡独立<br>② 跳绳<br>③ 熊爬<br>拉伸放松</td>
+        <td class="td-rest"><b>自由活动</b><br>骑车 / 游泳<br>公园跑跳<br>不安排课表</td>
+        <td class="td-train"><b>速度+敏捷</b><br>慢跑热身<br>④ 高抬腿跑<br>⑤ 立定跳远<br>⑥ 绕锥蛇形跑<br>拉伸放松</td>
+        <td class="td-train"><b>力量+核心</b><br>慢跑热身<br>⑦ 平板支撑<br>⑧ 夹球兔子跳<br>闯关挑战<br>拉伸放松</td>
+        <td class="td-optional"><b>可选·趣味</b><br>格子跳房子<br>网球抛接<br>足球射门<br>想练才练</td>
+      </tr>
+    </table>
+    <div class="tip-box">💡 <b>核心3练</b> = 周一 + 周五 + 周六，周日可选加练1次趣味课。周二三四不安排课表，让孩子自由活动。</div>
+    <div class="warn-box">⚠️ <b>每次训练固定流程（45分钟分配）</b>：操场慢跑1圈热身(5min) → 主训练(30min) → 拉伸放松(5min) → 机动补水(5min)，三段缺一不可。</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">📋 每日详细计划</div>
+
+    <div class="day-card mon">
+      <div class="day-header"><span>🧘 周一 · 平衡+协调</span><span style="font-size:0.8em;font-weight:400;">~45分钟</span></div>
+      <div class="day-body"><ol>
+        <li><div class="exercise-line">🏃 操场慢跑1圈（5分钟）+ 甩臂10次 + 转踝各10圈 + 小弹跳10次</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ 热身 ~5min</div></li>
+        <li><div class="exercise-line">🧘 金鸡独立（单脚站立）— 每脚3组</div><div class="prop-tip">头顶网球平衡，球不掉=满分</div><div class="rongrong-tip">扶墙单脚站立，不计时</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~10min（含组间休息）</div></li>
+        <li><div class="exercise-line">🤸 跳绳 — 连续跳绳挑战</div><div class="prop-tip">网球5等级抛接（单手→交替→拍手→背后→墙壁反弹）</div><div class="rongrong-tip">原地蹦蹦跳或模仿甩绳</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~12min</div></li>
+        <li><div class="exercise-line">🐻 熊爬行走 — 来回3-7趟，5米/趟</div><div class="rongrong-tip">膝盖可以碰地，普通爬也OK</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~10min（含组间休息）</div></li>
+        <li><div class="exercise-line">🤸 拉伸放松 — 手臂伸展15秒×2 + 站姿体前屈15秒×2 + 大腿前侧15秒×2</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~5min</div></li>
+        <li><div class="exercise-line">💬 机动时间 — 补水、聊天、调整状态</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~3min</div></li>
+      </ol></div>
+    </div>
+
+    <div class="day-card fri">
+      <div class="day-header"><span>⚡ 周五 · 速度+敏捷</span><span style="font-size:0.8em;font-weight:400;">~45分钟</span></div>
+      <div class="day-body"><ol>
+        <li><div class="exercise-line">🏃 操场慢跑1圈（5分钟）+ 甩臂10次 + 转踝各10圈 + 小弹跳10次</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ 热身 ~5min</div></li>
+        <li><div class="exercise-line">🦵 高抬腿跑 — 15-30秒×2-3组，组间休息30秒</div><div class="prop-tip">足球脚尖快速点球，像鼓手敲鼓🥁</div><div class="rongrong-tip">慢速高抬腿走，不要求高度</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~8min</div></li>
+        <li><div class="exercise-line">🦘 立定跳远 — 8-12次（每次休息15秒）</div><div class="prop-tip">锥标记跳远(1m/1.2m/1.5m三档) 或 格子精准着陆跳(3分制)</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~10min</div></li>
+        <li><div class="exercise-line">🐍 绕锥蛇形跑 — 来回2-4趟，5锥间距1.5米</div><div class="prop-tip">增加"锥方向反应冲刺"：爸爸喊左/右/前，兜兜冲向对应锥</div><div class="rongrong-tip">慢速跑过去，走回来</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~12min（蛇形跑+反应冲刺）</div></li>
+        <li><div class="exercise-line">🤸 拉伸放松 — 同周一</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~5min</div></li>
+        <li><div class="exercise-line">💬 机动时间 — 补水、聊天、调整状态</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~5min</div></li>
+      </ol></div>
+    </div>
+
+    <div class="day-card sat">
+      <div class="day-header"><span>💪 周六 · 力量+核心+闯关</span><span style="font-size:0.8em;font-weight:400;">~45分钟</span></div>
+      <div class="day-body"><ol>
+        <li><div class="exercise-line">🏃 操场慢跑1圈（5分钟）+ 甩臂10次 + 转踝各10圈 + 小弹跳10次</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ 热身 ~5min</div></li>
+        <li><div class="exercise-line">🧱 平板支撑 — 15-45秒×2-3组，组间休息30秒</div><div class="prop-tip">平板传球：左右手交替从身下传网球</div><div class="rongrong-tip">膝盖着地半平板(跪姿)，5-10秒</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~8min</div></li>
+        <li><div class="exercise-line">🦘 夹球兔子跳 — 来回2-4趟，10米/趟</div><div class="rongrong-tip">可以用大一点的球(足球)</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~10min</div></li>
+        <li><div class="exercise-line">🏆 趣味障碍闯关 — 3-4轮，记录每轮用时</div><div style="font-size:0.85em;color:#636E72;padding-left:16px;margin-top:4px;">闯关流程：高抬腿5米 → 卷腹5个 → 熊爬5米 → 单脚站10秒 → 侧步5米 → 跳远2次 → 完成</div><div class="prop-tip">道具升级赛道：蛇形绕锥 → 跳房子 → 精准着陆 → 方向冲刺 → 运球回来 → 抛接球5次</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~15min（含轮间休息）</div></li>
+        <li><div class="exercise-line">🤸 拉伸放松 — 同周一</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~5min</div></li>
+        <li><div class="exercise-line">💬 机动时间 — 补水、聊天、调整状态</div><div style="font-size:0.8em;color:#636E72;padding-left:16px;">⏱️ ~2min</div></li>
+      </ol></div>
+    </div>
+
+    <div class="day-card sun">
+      <div class="day-header"><span>🎾 周日 · 可选趣味（想练才练）</span><span style="font-size:0.8em;font-weight:400;">~20-45分钟（看心情）</span></div>
+      <div class="day-body"><ol>
+        <li><div class="exercise-line">🟩 格子跳房子 — 来回3-5趟</div></li>
+        <li><div class="exercise-line">🎾 网球抛接挑战 — 选喜欢的等级玩</div></li>
+        <li><div class="exercise-line">⚽ 格子踢球射门 — 3米外踢球入格，比分数</div></li>
+        <li><div class="exercise-line">🤸 拉伸放松 — 同周一</div></li>
+      </ol>
+      <div class="tip-box" style="margin-top:12px;">💡 周日纯玩性质，没有达标要求，重点是让孩子觉得运动=好玩。</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="section">
+    <div class="section-title">📈 8周进阶标准</div>
+    <p style="margin-bottom:16px;color:#636E72;">不要急，每周按标准练就行。第4周和第8周有测试，看看进步了多少。</p>
+    <div class="prog-phase" style="background:#E8F5E9;color:#2E7D32;">🌱 第1-2周 · 适应期 — 学会动作，建立习惯</div>
+    <div class="prog-phase" style="background:#FFF3E0;color:#E65100;">🌿 第3-4周 · 提升期 — 增加量，提速度（第4周测试）</div>
+    <div class="prog-phase" style="background:#E3F2FD;color:#1565C0;">🌳 第5-6周 · 巩固期 — 达标，挑战自我</div>
+    <div class="prog-phase" style="background:#FCE4EC;color:#C62828;">🏆 第7-8周 · 最终挑战 — 突破极限（第8周测试）</div>
+    <table class="prog-table" style="margin-top:16px;">
+      <tr><th>动作</th><th class="stage1">1-2周 🌱</th><th class="stage2">3-4周 🌿</th><th class="stage3">5-6周 🌳</th><th class="stage4">7-8周 🏆</th></tr>
+      <tr><td>🧘 金鸡独立</td><td class="stage1">15秒×3组</td><td class="stage2">30秒×3组</td><td class="stage3">45秒×3组</td><td class="stage4">60秒×3组</td></tr>
+      <tr><td>🤸 跳绳</td><td class="stage1">单跳10个</td><td class="stage2">连续20个</td><td class="stage3">连续30个</td><td class="stage4">连续50个</td></tr>
+      <tr><td>🐻 熊爬</td><td class="stage1">来回3趟</td><td class="stage2">来回5趟</td><td class="stage3">来回6趟</td><td class="stage4">来回7趟</td></tr>
+      <tr><td>🦵 高抬腿跑</td><td class="stage1">15秒×2组</td><td class="stage2">20秒×3组</td><td class="stage3">30秒×3组</td><td class="stage4">40秒×3组</td></tr>
+      <tr><td>🦘 立定跳远</td><td class="stage1">1.0m</td><td class="stage2">1.2m</td><td class="stage3">1.5m</td><td class="stage4">1.5m</td></tr>
+      <tr><td>🐍 绕锥蛇形跑</td><td class="stage1">2趟(慢)</td><td class="stage2">3趟(不碰锥)</td><td class="stage3">3趟(快)</td><td class="stage4">4趟(计时)</td></tr>
+      <tr><td>🧱 平板支撑</td><td class="stage1">15秒×2组</td><td class="stage2">20秒×2组</td><td class="stage3">30秒×2组</td><td class="stage4">45秒×3组</td></tr>
+      <tr><td>🦘 夹球兔子跳</td><td class="stage1">来回2趟</td><td class="stage2">来回3趟</td><td class="stage3">来回3趟(脚踝版)</td><td class="stage4">来回4趟(脚踝版)</td></tr>
+    </table>
+    <div class="tip-box">💡 <b>第4周月度测试</b>：金鸡独立30秒 / 跳绳连续20个 / 立定跳远1.2m / 平板20秒 / 高抬腿20秒×3 / 绕锥不碰3趟<br>🏆 <b>第8周最终测试</b>：金鸡独立60秒 / 跳绳连续50个 / 立定跳远1.5m / 平板45秒×3组</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">🎾 道具使用速查</div>
+    <table class="prog-table">
+      <tr><th>道具</th><th>用在哪个动作</th><th>怎么用</th></tr>
+      <tr><td>🎾 网球</td><td>金鸡独立 / 跳绳 / 平板支撑</td><td>头顶平衡(不掉=满分) / 5等级抛接 / 平板下左右手传球</td></tr>
+      <tr><td>⚽ 足球</td><td>高抬腿 / 夹球兔子跳</td><td>脚尖快速点球顶 / 夹两膝间双脚跳</td></tr>
+      <tr><td>🚧 交通锥</td><td>立定跳远 / 绕锥蛇形跑</td><td>1m/1.2m/1.5m三档标记跳远 / 5锥S形绕跑</td></tr>
+      <tr><td>🟩 方格子</td><td>周日趣味 / 立定跳远</td><td>跳房子 / 精准着陆跳(3分制)</td></tr>
+    </table>
+    <div class="tip-box">💡 道具版和基础版<b>选一种做就行</b>，不用两种都做。建议：第1-2周用基础版学动作，第3周开始混入道具版增加趣味。</div>
+  </div>
+</div>
+
+<div class="page">
+  <div class="section">
+    <div class="section-title">💰 积分系统</div>
+    <p style="margin-bottom:14px;color:#636E72;">每次训练后跟兜兜一起算积分，达到200分就是"夏日冠军"！</p>
+    <div class="points-grid">
+      <div class="point-card"><div class="icon">✅</div><div class="label">完成一次训练</div><div class="pts">+10分</div></div>
+      <div class="point-card"><div class="icon">⭐</div><div class="label">动作全部达标</div><div class="pts">+5分</div></div>
+      <div class="point-card"><div class="icon">🎯</div><div class="label">选道具升级版</div><div class="pts">+3分</div></div>
+      <div class="point-card"><div class="icon">🤝</div><div class="label">爸爸一起练</div><div class="pts">+5分</div></div>
+      <div class="point-card"><div class="icon">🧸</div><div class="label">带融融一起练</div><div class="pts">+3分</div></div>
+      <div class="point-card"><div class="icon">📅</div><div class="label">连续3天打卡</div><div class="pts">+8分</div></div>
+    </div>
+    <div style="margin-top:14px;text-align:center;font-size:1.1em;">🥉 新手(0-50) → 🥈 达人(51-120) → 🥇 大师(121-200) → 🏆 冠军(200+)</div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">🎖️ 徽章挑战（9枚）</div>
+    <div class="badge-row">
+      <div class="badge-item"><div class="bi">🏃</div><div class="bn">跑步达人</div><div class="bc">完成3次训练 +15分</div></div>
+      <div class="badge-item"><div class="bi">🧘</div><div class="bn">平衡大师</div><div class="bc">单脚站60秒 +20分</div></div>
+      <div class="badge-item"><div class="bi">🤸</div><div class="bn">跳绳高手</div><div class="bc">连续跳50个 +20分</div></div>
+      <div class="badge-item"><div class="bi">💪</div><div class="bn">核心战士</div><div class="bc">平板45秒 +20分</div></div>
+      <div class="badge-item"><div class="bi">🦘</div><div class="bn">跳远飞人</div><div class="bc">跳远1.5米 +20分</div></div>
+      <div class="badge-item"><div class="bi">🐍</div><div class="bn">蛇形跑手</div><div class="bc">绕锥不碰3次 +15分</div></div>
+      <div class="badge-item"><div class="bi">🤝</div><div class="bn">亲子搭档</div><div class="bc">和爸爸练5次 +25分</div></div>
+      <div class="badge-item"><div class="bi">🌟</div><div class="bn">坚持之星</div><div class="bc">连续3周全勤 +30分</div></div>
+      <div class="badge-item"><div class="bi">🏆</div><div class="bn">夏日冠军</div><div class="bc">8周全完成+200分 +50分</div></div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">⚠️ 爸爸必读安全守则</div>
+    <div class="safety-box">
+      <h3>🛡️ 安全铁律</h3>
+      <ol>
+        <li><b>不在硬水泥地做跳跃动作</b> — 草地/瑜伽垫/木地板才可以</li>
+        <li><b>孩子说不舒服或疼痛，立刻停止</b> — 不要鼓励"坚持一下"</li>
+        <li><b>训练前确认无感冒发烧，饭后至少1小时</b></li>
+        <li><b>必须穿运动鞋</b> — 不穿拖鞋、不光脚</li>
+        <li><b>全程家长陪同</b> — 观察姿势，发现错误立即纠正</li>
+        <li><b>每组之间喝几口水</b> — 夏天早上也要注意补水</li>
+        <li><b>太热就改到傍晚或室内</b> — 不要硬撑高温</li>
+        <li><b>7岁骨骼还在发育，禁止负重训练</b> — 不拿哑铃、不背重物</li>
+        <li><b>出门前涂防晒</b> — 夏天早上8点紫外线已经很强</li>
+        <li><b>识别中暑信号</b> — 头晕、恶心、脸通红 → 立刻停，到阴凉处小口喝水</li>
+        <li><b>地面温度检查</b> — 训练前用手摸一下操场地面，烫手就改室内</li>
+      </ol>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section">
+    <div class="section-title">📝 每周打卡表（打印用）</div>
+    <table class="checklist-table">
+      <tr>
+        <th style="background:#6C5CE7;">周一 🧘</th>
+        <th style="background:#B2BEC3;">周二三四</th>
+        <th style="background:#FF6B6B;">周五 ⚡</th>
+        <th style="background:#00B894;">周六 💪</th>
+        <th style="background:#FDCB6E;color:#2D3436;">周日 🎾</th>
+      </tr>
+      <tr>
+        <td>慢跑 ✅<br>金鸡独立 ✅<br>跳绳 ✅<br>熊爬 ✅<br>拉伸 ✅<br><b>积分: ___</b></td>
+        <td style="background:#F0F0F0;color:#999;">自由活动<br>骑车/游泳<br>公园跑跳<br>无课表</td>
+        <td>慢跑 ✅<br>高抬腿 ✅<br>立定跳远 ✅<br>绕锥跑 ✅<br>拉伸 ✅<br><b>积分: ___</b></td>
+        <td>慢跑 ✅<br>平板支撑 ✅<br>夹球兔跳 ✅<br>闯关 ✅<br>用时: ___<br>拉伸 ✅<br><b>积分: ___</b></td>
+        <td>跳房子 ✅<br>抛接球 ✅<br>射门 ✅<br>(想练才练)<br><b>积分: ___</b></td>
+      </tr>
+    </table>
+    <p class="small-note">💡 每周一张，8周共8张。道具版选一种做即可。</p>
+  </div>
+</div>
+
+<div class="page">
+  <div class="section">
+    <div class="section-title">📊 文件定位与使用建议</div>
+    <table class="prog-table">
+      <tr><th>文件</th><th>给谁看</th><th>怎么用</th></tr>
+      <tr><td>📚 爸爸执行手册（本文件）</td><td>爸爸</td><td><b>主文件</b>，每周看一次确认课表，打印打卡表</td></tr>
+      <tr><td>📖 运动学院训练手册</td><td>兜兜</td><td>给孩子翻的绘本，有插图和口诀，可交互打卡盖章</td></tr>
+      <tr><td>📋 暑期体适能锻炼计划</td><td>爸爸（参考）</td><td>动作细节最全(19个动作)，需要查某个动作怎么做时翻</td></tr>
+      <tr><td>🎾 道具进阶玩法</td><td>爸爸（参考）</td><td>16种道具玩法的详细说明，孩子厌倦基础版时查</td></tr>
+    </table>
+    <div class="tip-box">💡 简单说：你用 <b>本文件</b> 排课和打卡，兜兜用 <b>训练手册</b> 翻图和盖章，另外两份当字典查。</div>
+  </div>
+</div>
+
+</body>
+</html>
