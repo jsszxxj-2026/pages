@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="小学低年级马达原理动画。先看《马达转起来了》Pip 版。">
+<title>马达转起来了</title>
+<style>
+  :root {
+    --ink: #1b2a4e;
+    --ink-soft: #3d4f78;
+    --paper: #fffaf1;
+    --coral: #ff6848;
+    --coral-deep: #e24d32;
+    --sun: #ffd15c;
+    --blue: #4d86ff;
+    --shadow: 0 16px 40px rgba(27, 42, 78, 0.14);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    color: var(--ink);
+    background: #8ecfff;
+    min-height: 100vh;
+    min-height: 100dvh;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .sky {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: calc(28px + env(safe-area-inset-top)) 20px calc(28px + env(safe-area-inset-bottom));
+  }
+  .panel {
+    width: min(560px, 100%);
+    background: var(--paper);
+    border-radius: 28px;
+    box-shadow: var(--shadow);
+    padding: 32px 28px 28px;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin-bottom: 12px;
+    color: var(--blue);
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .back:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 8px;
+  }
+  h1 {
+    font-size: 2rem;
+    line-height: 1.25;
+    margin-bottom: 8px;
+  }
+  .lead {
+    color: var(--ink-soft);
+    font-size: 1.05rem;
+    line-height: 1.6;
+    margin-bottom: 24px;
+  }
+  .choices {
+    display: grid;
+    gap: 16px;
+  }
+  .choice {
+    display: block;
+    border-radius: 22px;
+    padding: 22px 22px 20px;
+    text-decoration: none;
+    color: inherit;
+    border: 3px solid transparent;
+  }
+  .choice.ready {
+    background: var(--sun);
+    color: var(--ink);
+  }
+  .choice.ready:hover,
+  .choice.ready:focus-visible {
+    border-color: var(--coral);
+    transform: translateY(-2px);
+  }
+  .choice.ready:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+  }
+  .choice.soon {
+    background: #eef3f8;
+    color: #6b7c93;
+    border: 3px dashed #c5d0dc;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    padding: 4px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+  }
+  .choice.ready .badge {
+    background: var(--coral);
+    color: white;
+  }
+  .choice.soon .badge {
+    background: #d5deea;
+    color: #3d4f78;
+  }
+  .choice h2 {
+    font-size: 1.35rem;
+    line-height: 1.35;
+    margin-bottom: 6px;
+  }
+  .choice p {
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .choice.ready p { color: var(--ink-soft); }
+  @media (max-width: 600px) {
+    .panel { padding: 24px 18px 18px; border-radius: 22px; }
+    h1 { font-size: 1.7rem; }
+    .choice h2 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="sky">
+  <main class="panel">
+    <a class="back" href="../">返回首页</a>
+    <h1>马达转起来了</h1>
+    <p class="lead">小学低年级马达原理动画。选一个版本，在平板上打开看。</p>
+    <div class="choices">
+      <a class="choice ready" href="pip/">
+        <span class="badge">可以看了</span>
+        <h2>《马达转起来了》（Pip 版）</h2>
+        <p>生活里的马达、拆开看一看、听旁白、看字幕。</p>
+      </a>
+      <div class="choice soon" aria-disabled="true">
+        <span class="badge">即将放上</span>
+        <h2>《小马达，转起来！》（Codex 版）</h2>
+        <p>这一版还在准备，先看上面的 Pip 版。</p>
+      </div>
+    </div>
+  </main>
+</div>
+</body>
+</html>

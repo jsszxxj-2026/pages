@@ -1,0 +1,890 @@
+/* 马达转起来了 — picture-book explainer */
+
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("../assets/fonts/NotoSansSC-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Noto Sans SC";
+  src: url("../assets/fonts/NotoSansSC-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --ink: #1b2a4e;
+  --ink-soft: #3d4f78;
+  --paper: #fffaf1;
+  --paper-strong: #fffdf8;
+  --line: rgba(27, 42, 78, 0.12);
+  --coral: #ff6848;
+  --coral-deep: #e24d32;
+  --sun: #ffd15c;
+  --leaf: #3caf6f;
+  --teal: #2bb8b0;
+  --blue: #4d86ff;
+  --navy: #2c4a7c;
+  --magnet-n: #ef5b48;
+  --magnet-s: #4d7dff;
+  --copper: #e39a5a;
+  --copper-deep: #c47138;
+  --shadow: 0 16px 40px rgba(27, 42, 78, 0.14);
+  --radius: 28px;
+  --tap: 56px;
+  --font: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --safe-t: env(safe-area-inset-top, 0px);
+  --safe-r: env(safe-area-inset-right, 0px);
+  --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-l: env(safe-area-inset-left, 0px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  height: 100dvh;
+  overflow: hidden;
+  font-family: var(--font);
+  color: var(--ink);
+  background: #8ecfff;
+  -webkit-tap-highlight-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+button, input {
+  font-family: inherit;
+  color: inherit;
+}
+
+button {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--blue);
+  outline-offset: 3px;
+}
+
+/* ----- sky world ----- */
+.world {
+  position: relative;
+  height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 82% 8%, #fff4b8 0 8%, transparent 28%),
+    linear-gradient(180deg, #7ec9ff 0%, #c7ecff 42%, #fff1c9 78%, #c8ec9e 100%);
+}
+
+.sun {
+  position: absolute;
+  top: 4%;
+  right: 8%;
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fffce0, #ffd15c 58%, #ffb03a);
+  box-shadow: 0 0 0 14px rgba(255, 209, 92, 0.28), 0 0 40px rgba(255, 200, 60, 0.45);
+  pointer-events: none;
+}
+
+.cloud {
+  position: absolute;
+  background: #fff;
+  border-radius: 40px;
+  opacity: 0.88;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 10px rgba(60, 110, 160, 0.08));
+}
+.cloud::before, .cloud::after {
+  content: "";
+  position: absolute;
+  background: #fff;
+  border-radius: 50%;
+}
+.cloud-a { width: 130px; height: 38px; top: 10%; left: 6%; animation: drift 28s linear infinite; }
+.cloud-a::before { width: 58px; height: 58px; left: 18px; top: -30px; }
+.cloud-a::after { width: 46px; height: 46px; left: 60px; top: -22px; }
+.cloud-b { width: 100px; height: 30px; top: 18%; right: 22%; animation: drift 36s linear infinite reverse; }
+.cloud-b::before { width: 44px; height: 44px; left: 14px; top: -24px; }
+.cloud-b::after { width: 36px; height: 36px; left: 48px; top: -16px; }
+.cloud-c { width: 150px; height: 40px; bottom: 22%; left: -4%; opacity: 0.7; animation: drift 40s linear infinite; }
+.cloud-c::before { width: 60px; height: 60px; left: 22px; top: -32px; }
+.cloud-c::after { width: 50px; height: 50px; left: 72px; top: -22px; }
+
+@keyframes drift {
+  from { transform: translateX(0); }
+  to { transform: translateX(40px); }
+}
+
+.hill {
+  position: absolute;
+  bottom: 0;
+  left: -10%;
+  width: 70%;
+  height: 22%;
+  background: #7dcf72;
+  border-radius: 50% 50% 0 0;
+  pointer-events: none;
+}
+.hill-b {
+  left: auto;
+  right: -14%;
+  width: 62%;
+  height: 18%;
+  background: #63c06a;
+}
+
+/* ----- app shell ----- */
+.app {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  padding:
+    calc(8px + var(--safe-t))
+    calc(16px + var(--safe-r))
+    calc(10px + var(--safe-b))
+    calc(16px + var(--safe-l));
+  gap: 8px;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 52px;
+  gap: 12px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.brand-mark {
+  width: 42px;
+  height: 42px;
+  flex: 0 0 auto;
+}
+
+.brand h1 {
+  margin: 0;
+  font-size: clamp(18px, 4vw, 26px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-btn {
+  width: var(--tap);
+  height: var(--tap);
+  border-radius: 18px;
+  background: rgba(255, 252, 247, 0.86);
+  box-shadow: 0 6px 16px rgba(27, 42, 78, 0.12);
+  display: grid;
+  place-items: center;
+  color: var(--ink);
+  flex: 0 0 auto;
+}
+.icon-btn svg { width: 28px; height: 28px; }
+.icon-btn[aria-pressed="true"] { background: var(--ink); color: #fff; }
+
+.stage-wrap {
+  position: relative;
+  min-height: 0;
+}
+
+.page {
+  height: 100%;
+  background: rgba(255, 250, 241, 0.86);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  backdrop-filter: blur(8px);
+  position: relative;
+}
+
+.view {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+}
+.view.is-on { display: flex; }
+
+/* ----- cover / intro ----- */
+#view-cover,
+#view-intro,
+#view-ending {
+  flex-direction: column;
+  text-align: center;
+  gap: 10px;
+  padding: 20px 20px 16px;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(36px, 8vw, 64px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+  text-shadow: 0 4px 0 rgba(255, 255, 255, 0.55);
+  line-height: 1.15;
+}
+
+.hero-sub {
+  margin: 0;
+  font-size: clamp(16px, 3.4vw, 22px);
+  color: var(--ink-soft);
+  font-weight: 700;
+}
+
+.hero-art {
+  width: min(100%, 560px);
+  flex: 1 1 auto;
+  min-height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-art svg { width: 100%; height: 100%; max-height: 360px; }
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn {
+  min-height: var(--tap);
+  min-width: 160px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  font-size: clamp(18px, 3.4vw, 22px);
+  font-weight: 700;
+  box-shadow: 0 8px 0 rgba(27, 42, 78, 0.16);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, filter 0.12s ease;
+}
+.btn:active { transform: translateY(3px); box-shadow: 0 5px 0 rgba(27, 42, 78, 0.16); }
+.btn:disabled { opacity: 0.55; cursor: default; transform: none; }
+.btn-primary { background: var(--coral); color: #fff; }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.05); }
+.btn-secondary { background: #fff; color: var(--ink); border: 2px solid rgba(27, 42, 78, 0.1); }
+
+/* ----- scene grid ----- */
+.scene-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  width: 100%;
+  height: 100%;
+  padding: 6px;
+}
+
+.scene-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 22px;
+  border: 2px solid var(--line);
+  overflow: hidden;
+  min-height: 0;
+  text-align: left;
+  box-shadow: 0 8px 18px rgba(27, 42, 78, 0.06);
+  transition: transform 0.16s ease, box-shadow 0.16s ease;
+}
+.scene-card:hover { transform: translateY(-2px); box-shadow: 0 12px 24px rgba(27, 42, 78, 0.12); }
+.scene-card:active { transform: translateY(0); }
+
+.scene-art {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 4px 8px 0;
+}
+.scene-art svg { width: 100%; height: 100%; display: block; }
+
+.scene-name {
+  display: block;
+  padding: 6px 12px 10px;
+  font-size: clamp(15px, 2.4vw, 20px);
+  font-weight: 700;
+  text-align: center;
+}
+
+#app[data-view="scene"] .scene-grid {
+  display: block;
+  height: 100%;
+  padding: 0;
+}
+#app[data-view="scene"] .scene-card { display: none; }
+#app[data-view="scene"][data-scene="car"] .scene-card[data-scene="car"],
+#app[data-view="scene"][data-scene="fan"] .scene-card[data-scene="fan"],
+#app[data-view="scene"][data-scene="washer"] .scene-card[data-scene="washer"],
+#app[data-view="scene"][data-scene="brush"] .scene-card[data-scene="brush"],
+#app[data-view="scene"][data-scene="dryer"] .scene-card[data-scene="dryer"],
+#app[data-view="scene"][data-scene="plane"] .scene-card[data-scene="plane"] {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  box-shadow: none;
+  background: transparent;
+  border-radius: 0;
+  align-items: center;
+  justify-content: center;
+}
+#app[data-view="scene"] .scene-art {
+  flex: 1 1 auto;
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  padding: 28px 16px 8px;
+}
+#app[data-view="scene"] .scene-art svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+#app[data-view="scene"] .scene-name {
+  position: absolute;
+  left: 16px;
+  top: 12px;
+  background: rgba(255, 250, 241, 0.92);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: clamp(16px, 3vw, 22px);
+  box-shadow: 0 4px 12px rgba(27, 42, 78, 0.08);
+}
+
+.callout {
+  position: absolute;
+  background: var(--sun);
+  color: var(--ink);
+  font-weight: 700;
+  font-size: 16px;
+  padding: 6px 12px;
+  border-radius: 14px 14px 14px 4px;
+  box-shadow: 0 4px 0 rgba(27, 42, 78, 0.12);
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateY(6px) scale(0.96);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+  pointer-events: none;
+}
+#app[data-view="scene"] .callout { opacity: 1; transform: none; }
+
+/* ----- principle + explode motor stage ----- */
+.motor-stage {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 4px;
+  padding: 4px;
+}
+.step-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+.chip {
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: #fff;
+  border: 2px solid var(--line);
+  font-size: 16px;
+  font-weight: 700;
+}
+.chip.is-on {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+.motor-art { min-height: 0; }
+.motor-art svg { width: 100%; height: 100%; display: block; }
+
+.part-label {
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 20px;
+  fill: var(--ink);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.5s ease;
+}
+.tag-bg { fill: #fffce8; stroke: rgba(27, 42, 78, 0.12); stroke-width: 2; }
+
+/* motor motions */
+.rotor, .wheel-spin, .mini-rotor, .prop, .fan-blades, .drum-spin, .hubcap, .impeller {
+  transform-box: view-box;
+  transform-origin: center;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin-off { to { transform: rotate(-360deg); } }
+@keyframes wiggle {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+@keyframes oscillate {
+  0%, 100% { transform: rotate(-14deg); }
+  50% { transform: rotate(14deg); }
+}
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes wind {
+  0% { opacity: 0.15; stroke-dashoffset: 40; }
+  50% { opacity: 0.9; }
+  100% { opacity: 0.15; stroke-dashoffset: 0; }
+}
+@keyframes current {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.45; }
+  50% { opacity: 1; }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1); }
+}
+
+/* Scene loops: only while that view is alive, plus always-on gentle previews in the grid */
+#app[data-view="grid"] .hubcap,
+#app[data-view="scene"][data-scene="car"] .hubcap { animation: spin 1.1s linear infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .car-motor .mini-rotor,
+#app[data-view="scene"][data-scene="car"] .car-motor .mini-rotor { animation: spin 0.7s linear infinite; transform-origin: center; transform-box: fill-box; }
+
+#app[data-view="grid"] .fan-blades,
+#app[data-view="scene"][data-scene="fan"] .fan-blades { animation: spin 0.55s linear infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .fan-wind,
+#app[data-view="scene"][data-scene="fan"] .fan-wind { animation: wind 1.2s ease-in-out infinite; }
+
+#app[data-view="grid"] .drum-spin,
+#app[data-view="scene"][data-scene="washer"] .drum-spin { animation: spin 2.8s linear infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .washer-motor .mini-rotor,
+#app[data-view="scene"][data-scene="washer"] .washer-motor .mini-rotor { animation: spin 0.6s linear infinite; transform-origin: center; transform-box: fill-box; }
+
+#app[data-view="grid"] .brush-head,
+#app[data-view="scene"][data-scene="brush"] .brush-head { animation: oscillate 0.14s linear infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .spark,
+#app[data-view="scene"][data-scene="brush"] .spark { animation: twinkle 1s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .brush-motor .mini-rotor,
+#app[data-view="scene"][data-scene="brush"] .brush-motor .mini-rotor { animation: spin 0.35s linear infinite; transform-origin: center; transform-box: fill-box; }
+
+#app[data-view="grid"] .impeller,
+#app[data-view="scene"][data-scene="dryer"] .impeller { animation: spin 0.35s linear infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .dryer-wind,
+#app[data-view="scene"][data-scene="dryer"] .dryer-wind { animation: wind 0.9s ease-in-out infinite; }
+
+#app[data-view="grid"] .prop,
+#app[data-view="scene"][data-scene="plane"] .prop { animation: spin 0.18s linear infinite; transform-origin: center; transform-box: fill-box; }
+#app[data-view="grid"] .plane-bob,
+#app[data-view="scene"][data-scene="plane"] .plane-bob { animation: bob 2.4s ease-in-out infinite; }
+#app[data-view="grid"] .plane-motor .mini-rotor,
+#app[data-view="scene"][data-scene="plane"] .plane-motor .mini-rotor { animation: spin 0.3s linear infinite; transform-origin: center; transform-box: fill-box; }
+
+/* principle steps */
+.electrons, .forces, .comm-glow, .battery-glow { opacity: 0; transition: opacity 0.45s ease; }
+#app[data-step="1"] .electrons,
+#app[data-step="2"] .electrons,
+#app[data-step="3"] .electrons,
+#app[data-step="comm"] .electrons { opacity: 1; }
+#app[data-step="1"] .battery-glow,
+#app[data-step="2"] .battery-glow,
+#app[data-step="3"] .battery-glow,
+#app[data-step="comm"] .battery-glow { opacity: 1; animation: pulse-glow 1.6s ease-in-out infinite; }
+
+#app[data-step="2"] .forces { opacity: 1; }
+#app[data-step="2"] .rotor { animation: wiggle 1.1s ease-in-out infinite; transform-origin: 360px 270px; transform-box: view-box; }
+
+#app[data-step="3"] .rotor,
+#app[data-step="comm"] .rotor,
+#app[data-explode="together"] .rotor {
+  animation: spin 1.15s linear infinite;
+  transform-origin: 360px 270px;
+  transform-box: view-box;
+}
+#app[data-step="3"] .wheel-spin,
+#app[data-step="comm"] .wheel-spin,
+#app[data-explode="together"] .wheel-spin {
+  animation: spin 1.15s linear infinite;
+  transform-origin: 780px 270px;
+  transform-box: view-box;
+}
+
+#app[data-step="comm"] .comm-glow { opacity: 1; animation: pulse-glow 1.1s ease-in-out infinite; }
+#app[data-step="comm"] .label-trick { opacity: 1; }
+
+.electron {
+  offset-rotate: 0deg;
+  animation: current 2.2s linear infinite;
+}
+
+/* explode translations */
+.part-shell-left, .part-shell-right, .part-magnet-n, .part-magnet-s,
+.part-coil-wrap, .part-shaft, .wheel-group {
+  transition: transform 0.7s cubic-bezier(0.22, 0.8, 0.28, 1);
+}
+#app[data-explode="shell"] .part-shell-left,
+#app[data-explode="magnets"] .part-shell-left,
+#app[data-explode="coil"] .part-shell-left,
+#app[data-explode="shaft"] .part-shell-left { transform: translate(-92px, 0); }
+#app[data-explode="shell"] .part-shell-right,
+#app[data-explode="magnets"] .part-shell-right,
+#app[data-explode="coil"] .part-shell-right,
+#app[data-explode="shaft"] .part-shell-right { transform: translate(92px, 0); }
+
+#app[data-explode="magnets"] .part-magnet-n,
+#app[data-explode="coil"] .part-magnet-n,
+#app[data-explode="shaft"] .part-magnet-n { transform: translate(-128px, 0); }
+#app[data-explode="magnets"] .part-magnet-s,
+#app[data-explode="coil"] .part-magnet-s,
+#app[data-explode="shaft"] .part-magnet-s { transform: translate(128px, 0); }
+
+#app[data-explode="coil"] .part-coil-wrap,
+#app[data-explode="shaft"] .part-coil-wrap { transform: translate(0, -78px); }
+
+#app[data-explode="shaft"] .part-shaft,
+#app[data-explode="shaft"] .wheel-group { transform: translate(110px, 0); }
+
+#app[data-explode="shell"] .label-shell,
+#app[data-explode="magnets"] .label-shell,
+#app[data-explode="coil"] .label-shell,
+#app[data-explode="shaft"] .label-shell { opacity: 1; }
+#app[data-explode="magnets"] .label-magnet,
+#app[data-explode="coil"] .label-magnet,
+#app[data-explode="shaft"] .label-magnet { opacity: 1; }
+#app[data-explode="coil"] .label-coil,
+#app[data-explode="shaft"] .label-coil { opacity: 1; }
+#app[data-explode="shaft"] .label-shaft { opacity: 1; }
+
+/* intro floating icons */
+.orbit { animation: spin 22s linear infinite; transform-origin: 260px 200px; transform-box: view-box; }
+.orbit-rev { animation: spin-off 26s linear infinite; transform-origin: 260px 200px; transform-box: view-box; }
+.intro-rotor {
+  animation: spin 1.4s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.brand-rotor {
+  animation: spin 1.6s linear infinite;
+  transform-origin: 32px 32px;
+  transform-box: view-box;
+}
+#app[data-view="cover"] .brand h1,
+#app[data-view="ending"] .brand h1 { visibility: hidden; }
+#app[data-view="cover"] .fan-blades,
+#app[data-view="intro"] .fan-blades,
+#app[data-view="ending"] .fan-blades {
+  animation: spin 1.2s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+#app[data-view="grid"] .fan-motor .mini-rotor,
+#app[data-view="scene"][data-scene="fan"] .fan-motor .mini-rotor {
+  animation: spin 0.55s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+#app[data-view="grid"] .dryer-motor .mini-rotor,
+#app[data-view="scene"][data-scene="dryer"] .dryer-motor .mini-rotor {
+  animation: spin 0.45s linear infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+
+
+#app[data-seg="intro-2"] .intro-core { animation: pulse-glow 0.7s ease-in-out 2; }
+
+/* ----- caption + dock ----- */
+.caption-wrap {
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: rgba(27, 42, 78, 0.92);
+  color: #fff;
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+.caption-wrap.is-empty { background: rgba(27, 42, 78, 0.08); color: transparent; min-height: 24px; padding: 0; box-shadow: none; }
+#caption {
+  margin: 0;
+  font-size: clamp(18px, 4.6vw, 28px);
+  font-weight: 700;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  max-width: 46em;
+}
+#caption.is-in { animation: caption-in 0.35s ease; }
+@keyframes caption-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.dock {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: center;
+}
+#app[data-view="cover"] .dock,
+#app[data-view="cover"] .caption-wrap { display: none; }
+
+.chapters {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.chapters button {
+  min-height: 44px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(255, 252, 247, 0.8);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink-soft);
+}
+.chapters button.is-on {
+  background: var(--ink);
+  color: #fff;
+}
+
+.controls {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+.controls .icon-btn { width: 52px; height: 52px; border-radius: 16px; }
+
+.progress {
+  position: absolute;
+  left: 0; right: 0; top: 0;
+  height: 5px;
+  background: rgba(27, 42, 78, 0.08);
+  pointer-events: none;
+}
+.progress > span {
+  display: block;
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--coral), var(--sun));
+  transition: width 0.35s ease;
+}
+
+.back-btn {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  z-index: 3;
+  min-height: 44px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: rgba(255, 250, 241, 0.95);
+  font-weight: 700;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(27, 42, 78, 0.1);
+  display: none;
+}
+#app[data-view="scene"] .back-btn { display: inline-flex; align-items: center; }
+
+/* ending row of toys */
+.ending-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+}
+.ending-row .mini {
+  width: 72px;
+  height: 72px;
+  background: #fff;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 6px 14px rgba(27, 42, 78, 0.08);
+}
+.ending-row .mini svg { width: 58px; height: 58px; }
+
+/* ----- responsive ----- */
+@media (max-width: 860px) {
+  .scene-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .dock { grid-template-columns: 1fr; }
+  .controls { justify-content: center; }
+  .chapters { justify-content: center; }
+}
+
+@media (max-width: 560px) {
+  .app { padding-left: calc(10px + var(--safe-l)); padding-right: calc(10px + var(--safe-r)); gap: 6px; }
+  .page { border-radius: 22px; }
+  .btn { min-width: 0; width: 100%; }
+  .cta-row { flex-direction: column; align-items: stretch; }
+  .hero-title { font-size: clamp(30px, 11vw, 44px); }
+  .scene-name { font-size: 15px; }
+  .chip { font-size: 14px; min-height: 40px; padding: 6px 12px; }
+  .part-label { font-size: 16px; }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+  .app { gap: 4px; padding-top: calc(4px + var(--safe-t)); padding-bottom: calc(4px + var(--safe-b)); }
+  .topbar { min-height: 40px; }
+  .brand-mark { width: 32px; height: 32px; }
+  .caption-wrap { min-height: 48px; padding: 4px 12px; }
+  #caption { font-size: clamp(16px, 3.2vh, 22px); line-height: 1.3; }
+  .hero-title { font-size: clamp(24px, 6vh, 36px); }
+  .cta-row { flex-direction: row; }
+  .btn { min-width: 140px; min-height: 44px; font-size: 16px; }
+  .scene-grid { gap: 6px; }
+  .scene-name { padding: 2px 8px 6px; font-size: 13px; }
+  .step-row { display: none; } /* more room for the motor; dock still works */
+  .sun { width: 48px; height: 48px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cloud, .orbit, .orbit-rev { animation: none !important; }
+  #app[data-view="grid"] .hubcap,
+  #app[data-view="grid"] .fan-blades,
+  #app[data-view="grid"] .prop,
+  #app[data-view="grid"] .impeller,
+  #app[data-view="grid"] .drum-spin,
+  #app[data-view="grid"] .brush-head { animation-duration: 3s !important; }
+}
+
+#app[data-view="principle"] #explode-chips { display: none; }
+#app[data-view="explode"] #principle-chips { display: none; }
+#app[data-view="principle"] .label-shell,
+#app[data-view="principle"] .label-magnet,
+#app[data-view="principle"] .label-coil,
+#app[data-view="principle"] .label-shaft { opacity: 0; }
+
+.winding { transition: filter 0.4s ease; }
+#app[data-step="1"] .winding,
+#app[data-step="2"] .winding,
+#app[data-step="3"] .winding,
+#app[data-step="comm"] .winding,
+#app[data-explode="together"] .winding {
+  filter: drop-shadow(0 0 6px rgba(255, 209, 92, 0.95));
+}
+
+#btn-mute .icon-off { display: none !important; }
+#btn-mute[aria-pressed="true"] .icon-on { display: none !important; }
+#btn-mute[aria-pressed="true"] .icon-off { display: block !important; }
+#btn-play .icon-play,
+#btn-play .icon-pause { display: none !important; }
+#btn-play[aria-label="播放"] .icon-play,
+#btn-play[aria-label="暂停"] .icon-pause { display: block !important; }
+
+.brand-mark {
+  overflow: hidden;
+  border-radius: 50%;
+  background: #fff4c8;
+}
+
+/* less aggressive explode so parts stay clear of the battery */
+#app[data-explode="shell"] .part-shell-left,
+#app[data-explode="magnets"] .part-shell-left,
+#app[data-explode="coil"] .part-shell-left,
+#app[data-explode="shaft"] .part-shell-left { transform: translate(-70px, 0); }
+#app[data-explode="shell"] .part-shell-right,
+#app[data-explode="magnets"] .part-shell-right,
+#app[data-explode="coil"] .part-shell-right,
+#app[data-explode="shaft"] .part-shell-right { transform: translate(70px, 0); }
+
+#app[data-explode="magnets"] .part-magnet-n,
+#app[data-explode="coil"] .part-magnet-n,
+#app[data-explode="shaft"] .part-magnet-n { transform: translate(-78px, 36px); }
+#app[data-explode="magnets"] .part-magnet-s,
+#app[data-explode="coil"] .part-magnet-s,
+#app[data-explode="shaft"] .part-magnet-s { transform: translate(78px, 36px); }
+
+#app[data-explode="coil"] .part-coil-wrap,
+#app[data-explode="shaft"] .part-coil-wrap { transform: translate(0, -70px); }
+
+#app[data-explode="shaft"] .part-shaft,
+#app[data-explode="shaft"] .wheel-group { transform: translate(86px, 0); }
+
+@media (max-height: 500px) and (orientation: landscape) {
+  #view-cover.is-on, #view-ending.is-on {
+    display: grid;
+    grid-template-columns: minmax(240px, 1.1fr) minmax(180px, 1fr);
+    grid-template-rows: auto auto 1fr;
+    text-align: left;
+    padding: 6px 16px;
+    gap: 6px 16px;
+    align-items: center;
+  }
+  #view-cover .hero-title,
+  #view-ending .hero-title {
+    grid-column: 1;
+    grid-row: 1;
+    font-size: clamp(22px, 6vh, 32px);
+    margin: 0;
+  }
+  #view-cover .hero-sub,
+  #view-ending .hero-sub {
+    grid-column: 1;
+    grid-row: 2;
+    font-size: 14px;
+  }
+  #view-cover .cta-row,
+  #view-ending .cta-row {
+    grid-column: 1;
+    grid-row: 3;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-self: end;
+    margin: 0;
+  }
+  #view-cover .hero-art,
+  #view-ending .hero-art {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-height: 0;
+    max-height: 100%;
+    width: 100%;
+  }
+  #view-cover .btn, #view-ending .btn { width: auto; min-width: 140px; }
+  #view-intro { padding: 4px; }
+  #view-intro .hero-art { width: 100%; height: 100%; }
+  .step-row { display: flex !important; flex-wrap: nowrap; overflow: auto; }
+  .chip { font-size: 12px; min-height: 32px; padding: 4px 10px; }
+}
+
+#view-cover, #view-intro, #view-ending { min-height: 0; }
+#view-cover .hero-title,
+#view-cover .hero-sub,
+#view-cover .cta-row { flex: 0 0 auto; }
