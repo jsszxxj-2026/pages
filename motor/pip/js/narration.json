@@ -1,0 +1,264 @@
+{
+  "voice": "zh-CN-XiaoxiaoNeural",
+  "rate": "-18%",
+  "pitch": "+3Hz",
+  "engine": "edge-tts",
+  "segments": [
+    {
+      "id": "intro-1",
+      "visual": "intro",
+      "group": "intro",
+      "text": "嗨，小朋友！你看过小汽车自己跑起来吗？",
+      "file": "assets/audio/intro-1.mp3",
+      "duration": 5.712
+    },
+    {
+      "id": "intro-2",
+      "visual": "intro",
+      "group": "intro",
+      "text": "它的里面，藏着一个小小的帮手，名字叫马达。",
+      "file": "assets/audio/intro-2.mp3",
+      "duration": 5.568
+    },
+    {
+      "id": "intro-3",
+      "visual": "intro",
+      "group": "intro",
+      "text": "今天，我们一起看看，马达是怎么转起来的。",
+      "file": "assets/audio/intro-3.mp3",
+      "duration": 5.112
+    },
+    {
+      "id": "scenes-intro",
+      "visual": "scenes-grid",
+      "group": "scenes-intro",
+      "text": "其实呀，生活里好多会动的东西，里面都有马达。",
+      "file": "assets/audio/scenes-intro.mp3",
+      "duration": 5.76
+    },
+    {
+      "id": "scene-car-1",
+      "visual": "scene-car",
+      "group": "scene-car",
+      "text": "小汽车跑起来啦！",
+      "file": "assets/audio/scene-car-1.mp3",
+      "duration": 2.616
+    },
+    {
+      "id": "scene-car-2",
+      "visual": "scene-car",
+      "group": "scene-car",
+      "text": "轮子下面藏着马达，是它让车轮转起来的。",
+      "file": "assets/audio/scene-car-2.mp3",
+      "duration": 5.088
+    },
+    {
+      "id": "scene-fan-1",
+      "visual": "scene-fan",
+      "group": "scene-fan",
+      "text": "风扇呼呼地吹着凉风。",
+      "file": "assets/audio/scene-fan-1.mp3",
+      "duration": 3.024
+    },
+    {
+      "id": "scene-fan-2",
+      "visual": "scene-fan",
+      "group": "scene-fan",
+      "text": "叶片后面有马达，马达一转，风就来了。",
+      "file": "assets/audio/scene-fan-2.mp3",
+      "duration": 4.944
+    },
+    {
+      "id": "scene-washer-1",
+      "visual": "scene-washer",
+      "group": "scene-washer",
+      "text": "洗衣机在转圈圈。",
+      "file": "assets/audio/scene-washer-1.mp3",
+      "duration": 2.76
+    },
+    {
+      "id": "scene-washer-2",
+      "visual": "scene-washer",
+      "group": "scene-washer",
+      "text": "桶的下面有马达，衣服就是被它带着洗干净的。",
+      "file": "assets/audio/scene-washer-2.mp3",
+      "duration": 5.688
+    },
+    {
+      "id": "scene-brush-1",
+      "visual": "scene-brush",
+      "group": "scene-brush",
+      "text": "牙刷头在轻轻地抖。",
+      "file": "assets/audio/scene-brush-1.mp3",
+      "duration": 2.976
+    },
+    {
+      "id": "scene-brush-2",
+      "visual": "scene-brush",
+      "group": "scene-brush",
+      "text": "小小的马达藏在手柄里，帮我们把牙齿刷干净。",
+      "file": "assets/audio/scene-brush-2.mp3",
+      "duration": 5.88
+    },
+    {
+      "id": "scene-dryer-1",
+      "visual": "scene-dryer",
+      "group": "scene-dryer",
+      "text": "热风呼呼地吹出来。",
+      "file": "assets/audio/scene-dryer-1.mp3",
+      "duration": 2.736
+    },
+    {
+      "id": "scene-dryer-2",
+      "visual": "scene-dryer",
+      "group": "scene-dryer",
+      "text": "里面的马达转得很快，把风送出来。",
+      "file": "assets/audio/scene-dryer-2.mp3",
+      "duration": 4.32
+    },
+    {
+      "id": "scene-plane-1",
+      "visual": "scene-plane",
+      "group": "scene-plane",
+      "text": "遥控飞机飞上天啦！",
+      "file": "assets/audio/scene-plane-1.mp3",
+      "duration": 2.808
+    },
+    {
+      "id": "scene-plane-2",
+      "visual": "scene-plane",
+      "group": "scene-plane",
+      "text": "螺旋桨后面有马达，是它让飞机飞起来的。",
+      "file": "assets/audio/scene-plane-2.mp3",
+      "duration": 4.944
+    },
+    {
+      "id": "principle-intro",
+      "visual": "principle-0",
+      "group": "principle",
+      "text": "马达为什么会转呢？我们到里面看一看。",
+      "file": "assets/audio/principle-intro.mp3",
+      "duration": 4.92
+    },
+    {
+      "id": "principle-1a",
+      "visual": "principle-1",
+      "group": "principle",
+      "text": "马达要转，先要通电。",
+      "file": "assets/audio/principle-1a.mp3",
+      "duration": 3.24
+    },
+    {
+      "id": "principle-1b",
+      "visual": "principle-1",
+      "group": "principle",
+      "text": "小电池把电送进去，马达就有劲儿了。",
+      "file": "assets/audio/principle-1b.mp3",
+      "duration": 4.368
+    },
+    {
+      "id": "principle-2a",
+      "visual": "principle-2",
+      "group": "principle",
+      "text": "里面有磁铁，还有绕成圈的线圈。",
+      "file": "assets/audio/principle-2a.mp3",
+      "duration": 4.2
+    },
+    {
+      "id": "principle-2b",
+      "visual": "principle-2",
+      "group": "principle",
+      "text": "电一进去，它们就会互相推、互相拉。",
+      "file": "assets/audio/principle-2b.mp3",
+      "duration": 4.704
+    },
+    {
+      "id": "principle-3a",
+      "visual": "principle-3",
+      "group": "principle",
+      "text": "这一推一拉，中间的轴就转起来啦！",
+      "file": "assets/audio/principle-3a.mp3",
+      "duration": 4.08
+    },
+    {
+      "id": "principle-3b",
+      "visual": "principle-3",
+      "group": "principle",
+      "text": "轴一转，外面的轮子也就跟着转。",
+      "file": "assets/audio/principle-3b.mp3",
+      "duration": 4.368
+    },
+    {
+      "id": "commutator",
+      "visual": "principle-comm",
+      "group": "principle",
+      "text": "这里还有一个巧机关，它让马达一直转，不会停下来。",
+      "file": "assets/audio/commutator.mp3",
+      "duration": 6.096
+    },
+    {
+      "id": "explode-intro",
+      "visual": "explode-0",
+      "group": "explode",
+      "text": "现在，我们把马达打开，看看里面都有谁。",
+      "file": "assets/audio/explode-intro.mp3",
+      "duration": 5.52
+    },
+    {
+      "id": "explode-shell",
+      "visual": "explode-shell",
+      "group": "explode",
+      "text": "外面是硬硬的外壳，保护里面的零件。",
+      "file": "assets/audio/explode-shell.mp3",
+      "duration": 4.536
+    },
+    {
+      "id": "explode-magnets",
+      "visual": "explode-magnets",
+      "group": "explode",
+      "text": "两边是磁铁，它们会吸，也会推。",
+      "file": "assets/audio/explode-magnets.mp3",
+      "duration": 4.464
+    },
+    {
+      "id": "explode-coil",
+      "visual": "explode-coil",
+      "group": "explode",
+      "text": "中间是一圈套一圈的线圈，电就是从这里走的。",
+      "file": "assets/audio/explode-coil.mp3",
+      "duration": 5.472
+    },
+    {
+      "id": "explode-shaft",
+      "visual": "explode-shaft",
+      "group": "explode",
+      "text": "最中间是转轴。它会转起来，把力气传出去。",
+      "file": "assets/audio/explode-shaft.mp3",
+      "duration": 6.0
+    },
+    {
+      "id": "reassemble",
+      "visual": "explode-together",
+      "group": "explode",
+      "text": "我们把它们重新装好。看，马达又转起来了！",
+      "file": "assets/audio/reassemble.mp3",
+      "duration": 5.664
+    },
+    {
+      "id": "ending-1",
+      "visual": "ending",
+      "group": "ending",
+      "text": "原来啊，好多会转的东西，里面都藏着马达。",
+      "file": "assets/audio/ending-1.mp3",
+      "duration": 5.256
+    },
+    {
+      "id": "ending-2",
+      "visual": "ending",
+      "group": "ending",
+      "text": "下次再看到风扇或小汽车，你也可以说：这里有马达在转哦！",
+      "file": "assets/audio/ending-2.mp3",
+      "duration": 7.2
+    }
+  ]
+}

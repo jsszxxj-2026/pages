@@ -11,6 +11,7 @@
   --running: #22c55e;
   --travel: #f59e0b;
   --kids: #ec4899;
+  --motor: #38bdf8;
   --text: #f1f5f9;
   --text-sub: #94a3b8;
   --radius: 20px;
@@ -46,7 +47,7 @@ body {
 }
 .cards {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
 .card {
@@ -67,6 +68,7 @@ body {
 .card.running:hover { border-color: var(--running); }
 .card.travel:hover { border-color: var(--travel); }
 .card.kids:hover { border-color: var(--kids); }
+.card.motor:hover { border-color: var(--motor); }
 .card .icon {
   font-size: 3rem;
   margin-bottom: 16px;
@@ -85,6 +87,7 @@ body {
 .card.running h2 { color: var(--running); }
 .card.travel h2 { color: var(--travel); }
 .card.kids h2 { color: var(--kids); }
+.card.motor h2 { color: var(--motor); }
 .footer {
   text-align: center;
   margin-top: 48px;
@@ -118,6 +121,11 @@ body {
       <span class="icon">🧒</span>
       <h2>兜兜运动学院</h2>
       <p>8周暑假体适能 · 课表+积分+徽章 · 爸爸执行手册</p>
+    </a>
+    <a href="motor/" class="card motor">
+      <span class="icon">⚡</span>
+      <h2>马达转起来了</h2>
+      <p>小学低年级马达原理动画</p>
     </a>
   </div>
   <div class="footer">
