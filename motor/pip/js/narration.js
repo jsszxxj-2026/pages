@@ -152,49 +152,89 @@ window.NARRATION = {
       "id": "principle-1b",
       "visual": "principle-1",
       "group": "principle",
-      "text": "小电池把电送进去，马达就有劲儿了。",
+      "text": "小电池把电送进去，线圈里就有电在走了。",
       "file": "assets/audio/principle-1b.mp3",
-      "duration": 4.368
+      "duration": 5.232
     },
     {
       "id": "principle-2a",
       "visual": "principle-2",
       "group": "principle",
-      "text": "里面有磁铁，还有绕成圈的线圈。",
+      "text": "外壳两边是固定的磁铁，中间是绕成圈的线圈。",
       "file": "assets/audio/principle-2a.mp3",
-      "duration": 4.2
+      "duration": 6.12
     },
     {
-      "id": "principle-2b",
-      "visual": "principle-2",
+      "id": "principle-em-a",
+      "visual": "principle-em",
       "group": "principle",
-      "text": "电一进去，它们就会互相推、互相拉。",
-      "file": "assets/audio/principle-2b.mp3",
-      "duration": 4.704
+      "text": "没有电的时候，线圈不会吸，也不会推。",
+      "file": "assets/audio/principle-em-a.mp3",
+      "duration": 4.944
     },
     {
-      "id": "principle-3a",
-      "visual": "principle-3",
+      "id": "principle-em-b",
+      "visual": "principle-em",
       "group": "principle",
-      "text": "这一推一拉，中间的轴就转起来啦！",
-      "file": "assets/audio/principle-3a.mp3",
-      "duration": 4.08
+      "text": "电一进去，线圈就变成一块小磁铁，叫电磁铁，也有南极和北极。",
+      "file": "assets/audio/principle-em-b.mp3",
+      "duration": 8.04
     },
     {
-      "id": "principle-3b",
+      "id": "principle-force-a",
+      "visual": "principle-force",
+      "group": "principle",
+      "text": "一样的极会互相推开，不一样的极会互相拉近。",
+      "file": "assets/audio/principle-force-a.mp3",
+      "duration": 5.784
+    },
+    {
+      "id": "principle-force-b",
+      "visual": "principle-force",
+      "group": "principle",
+      "text": "它们又推又拉，中间的轴就被拧着转起来啦！",
+      "file": "assets/audio/principle-force-b.mp3",
+      "duration": 5.304
+    },
+    {
+      "id": "principle-3",
       "visual": "principle-3",
       "group": "principle",
       "text": "轴一转，外面的轮子也就跟着转。",
-      "file": "assets/audio/principle-3b.mp3",
+      "file": "assets/audio/principle-3.mp3",
       "duration": 4.368
     },
     {
-      "id": "commutator",
+      "id": "principle-stuck",
+      "visual": "principle-stuck",
+      "group": "principle",
+      "text": "要是电不换方向，转到正对的地方，就会被吸住停下来。",
+      "file": "assets/audio/principle-stuck.mp3",
+      "duration": 6.432
+    },
+    {
+      "id": "commutator-a",
       "visual": "principle-comm",
       "group": "principle",
-      "text": "这里还有一个巧机关，它让马达一直转，不会停下来。",
-      "file": "assets/audio/commutator.mp3",
-      "duration": 6.096
+      "text": "所以这里有个巧机关，叫换向器。",
+      "file": "assets/audio/commutator-a.mp3",
+      "duration": 4.488
+    },
+    {
+      "id": "commutator-b",
+      "visual": "principle-comm",
+      "group": "principle",
+      "text": "轴每转过半圈，电刷碰到另一块金属片，电流就反过来。",
+      "file": "assets/audio/commutator-b.mp3",
+      "duration": 6.768
+    },
+    {
+      "id": "commutator-c",
+      "visual": "principle-comm",
+      "group": "principle",
+      "text": "被吸住的那边变成互相推开，马达就一直转，不会停。",
+      "file": "assets/audio/commutator-c.mp3",
+      "duration": 6.744
     },
     {
       "id": "explode-intro",
@@ -216,17 +256,17 @@ window.NARRATION = {
       "id": "explode-magnets",
       "visual": "explode-magnets",
       "group": "explode",
-      "text": "两边是磁铁，它们会吸，也会推。",
+      "text": "两边是固定的磁铁。一样的极会推开，不一样的极会吸住。",
       "file": "assets/audio/explode-magnets.mp3",
-      "duration": 4.464
+      "duration": 7.104
     },
     {
       "id": "explode-coil",
       "visual": "explode-coil",
       "group": "explode",
-      "text": "中间是一圈套一圈的线圈，电就是从这里走的。",
+      "text": "中间是一圈套一圈的线圈。电一进去，它就会变成一块小磁铁。",
       "file": "assets/audio/explode-coil.mp3",
-      "duration": 5.472
+      "duration": 7.704
     },
     {
       "id": "explode-shaft",

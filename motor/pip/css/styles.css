@@ -515,36 +515,153 @@ button:focus-visible {
 #app[data-view="scene"][data-scene="plane"] .plane-motor .mini-rotor { animation: spin 0.3s linear infinite; transform-origin: center; transform-box: fill-box; }
 
 /* principle steps */
-.electrons, .forces, .comm-glow, .battery-glow { opacity: 0; transition: opacity 0.45s ease; }
-#app[data-step="1"] .electrons,
-#app[data-step="2"] .electrons,
-#app[data-step="3"] .electrons,
-#app[data-step="comm"] .electrons { opacity: 1; }
+.electrons, .forces, .comm-glow, .battery-glow,
+.coil-magnet, .magnet-aura, .stuck-hint, .wire-arrows, .brush-spark {
+  opacity: 0;
+  transition: opacity 0.45s ease;
+}
+.magnet-state-b { opacity: 0; }
+.keep-hint { opacity: 0; }
+.flip-hint { opacity: 0; }
+.no-magnet-hint { opacity: 0; }
+.label-e-magnet { opacity: 0; }
+
+#app[data-step="1"] .electrons-fwd,
+#app[data-step="2"] .electrons-fwd,
+#app[data-seg="principle-em-b"] .electrons-fwd,
+#app[data-step="force"] .electrons-fwd,
+#app[data-step="3"] .electrons-fwd,
+#app[data-step="stuck"] .electrons-fwd { opacity: 1; }
+
+#app[data-step="1"] .wire-arrows-fwd,
+#app[data-step="2"] .wire-arrows-fwd,
+#app[data-seg="principle-em-b"] .wire-arrows-fwd,
+#app[data-step="force"] .wire-arrows-fwd,
+#app[data-step="3"] .wire-arrows-fwd,
+#app[data-step="stuck"] .wire-arrows-fwd { opacity: 1; }
+
 #app[data-step="1"] .battery-glow,
 #app[data-step="2"] .battery-glow,
+#app[data-seg="principle-em-b"] .battery-glow,
+#app[data-step="force"] .battery-glow,
 #app[data-step="3"] .battery-glow,
+#app[data-step="stuck"] .battery-glow,
 #app[data-step="comm"] .battery-glow { opacity: 1; animation: pulse-glow 1.6s ease-in-out infinite; }
 
-#app[data-step="2"] .forces { opacity: 1; }
-#app[data-step="2"] .rotor { animation: wiggle 1.1s ease-in-out infinite; transform-origin: 360px 270px; transform-box: view-box; }
+/* identify fixed magnets and the coil */
+#app[data-step="2"] .label-magnet,
+#app[data-step="2"] .label-coil { opacity: 1; }
 
+/* contrast: unpowered coil has no poles */
+#app[data-seg="principle-em-a"] .no-magnet-hint { opacity: 1; }
+#app[data-seg="principle-em-a"] .winding { filter: none; }
+
+/* electrified coil becomes a little magnet */
+#app[data-seg="principle-em-b"] .coil-magnet-rotor,
+#app[data-step="force"] .coil-magnet-rotor,
+#app[data-step="3"] .coil-magnet-rotor,
+#app[data-step="stuck"] .coil-magnet-rotor { opacity: 1; }
+#app[data-seg="principle-em-b"] .coil-magnet-rotor {
+  animation: pole-pop 0.6s ease-out both;
+  transform-origin: 360px 270px;
+  transform-box: view-box;
+}
+#app[data-seg="principle-em-b"] .label-e-magnet,
+#app[data-step="force"] .label-e-magnet { opacity: 1; }
+#app[data-seg="principle-em-b"] .magnet-aura,
+#app[data-step="force"] .magnet-aura,
+#app[data-step="3"] .magnet-aura,
+#app[data-step="stuck"] .magnet-aura,
+#app[data-step="comm"] .magnet-aura {
+  opacity: 0.85;
+  animation: pulse-glow 1.4s ease-in-out infinite;
+}
+
+/* like poles push, unlike poles pull */
+#app[data-step="force"] .forces-push-pull { opacity: 1; }
+#app[data-seg="principle-force-a"] .rotor {
+  animation: wiggle 1.1s ease-in-out infinite;
+  transform-origin: 360px 270px;
+  transform-box: view-box;
+}
+
+/* shaft and wheel start turning */
+#app[data-seg="principle-force-b"] .rotor,
 #app[data-step="3"] .rotor,
-#app[data-step="comm"] .rotor,
 #app[data-explode="together"] .rotor {
   animation: spin 1.15s linear infinite;
   transform-origin: 360px 270px;
   transform-box: view-box;
 }
+#app[data-seg="principle-force-b"] .wheel-spin,
 #app[data-step="3"] .wheel-spin,
-#app[data-step="comm"] .wheel-spin,
 #app[data-explode="together"] .wheel-spin {
   animation: spin 1.15s linear infinite;
   transform-origin: 780px 270px;
   transform-box: view-box;
 }
 
+/* without reversing, the coil is pulled into alignment and stalls */
+#app[data-step="stuck"] .rotor {
+  animation: stall 2.3s ease-out forwards;
+  transform-origin: 360px 270px;
+  transform-box: view-box;
+}
+#app[data-step="stuck"] .stuck-hint { opacity: 1; animation: caption-in 0.45s ease 1.4s both; }
+
+/* commutator: start already flipped (S faces the right-hand magnet) and keep flipping each half-turn */
+#app[data-step="comm"] .rotor {
+  animation: comm-spin 1.15s linear infinite;
+  transform-origin: 360px 270px;
+  transform-box: view-box;
+}
+#app[data-step="comm"] .wheel-spin {
+  animation: spin 1.15s linear infinite;
+  transform-origin: 780px 270px;
+  transform-box: view-box;
+}
+#app[data-step="comm"] .coil-magnet-rotor { opacity: 1; }
+#app[data-step="comm"] .magnet-state-a { animation: current-half-b 1.15s linear infinite; }
+#app[data-step="comm"] .magnet-state-b { animation: current-half-a 1.15s linear infinite; }
 #app[data-step="comm"] .comm-glow { opacity: 1; animation: pulse-glow 1.1s ease-in-out infinite; }
 #app[data-step="comm"] .label-trick { opacity: 1; }
+#app[data-step="comm"] .brushes { filter: drop-shadow(0 0 6px rgba(255, 209, 92, 0.9)); }
+#app[data-step="comm"] .brush-spark { animation: spark-swap 1.15s linear infinite; }
+#app[data-step="comm"] .electrons-fwd { animation: current-half-b 1.15s linear infinite; }
+#app[data-step="comm"] .electrons-rev { animation: current-half-a 1.15s linear infinite; }
+#app[data-step="comm"] .wire-arrows-fwd { animation: current-half-b 1.15s linear infinite; }
+#app[data-step="comm"] .wire-arrows-rev { animation: current-half-a 1.15s linear infinite; }
+#app[data-seg="commutator-b"] .flip-hint { opacity: 1; }
+#app[data-seg="commutator-c"] .keep-hint { opacity: 1; }
+
+@keyframes pole-pop {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+@keyframes stall {
+  0% { transform: rotate(0deg); }
+  70% { transform: rotate(92deg); }
+  85% { transform: rotate(84deg); }
+  100% { transform: rotate(88deg); }
+}
+@keyframes comm-spin {
+  0% { transform: rotate(88deg); }
+  100% { transform: rotate(448deg); }
+}
+@keyframes spark-swap {
+  0%, 6% { opacity: 1; }
+  10%, 44% { opacity: 0; }
+  50%, 56% { opacity: 1; }
+  60%, 100% { opacity: 0; }
+}
+@keyframes current-half-a {
+  0%, 49.9% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+@keyframes current-half-b {
+  0%, 49.9% { opacity: 0; }
+  50%, 100% { opacity: 1; }
+}
 
 .electron {
   offset-rotate: 0deg;
@@ -790,15 +907,33 @@ button:focus-visible {
 #app[data-view="principle"] .label-magnet,
 #app[data-view="principle"] .label-coil,
 #app[data-view="principle"] .label-shaft { opacity: 0; }
+#app[data-view="principle"][data-step="2"] .label-magnet,
+#app[data-view="principle"][data-step="2"] .label-coil { opacity: 1; }
+#app[data-view="principle"][data-seg="principle-em-b"] .label-e-magnet,
+#app[data-view="principle"][data-step="force"] .label-e-magnet { opacity: 1; }
+#app[data-view="principle"][data-seg="principle-em-a"] .no-magnet-hint { opacity: 1; }
+#app[data-view="principle"][data-seg="commutator-b"] .flip-hint { opacity: 1; }
+#app[data-view="principle"][data-step="comm"] .label-trick { opacity: 1; }
 
 .winding { transition: filter 0.4s ease; }
-#app[data-step="1"] .winding,
-#app[data-step="2"] .winding,
+#app[data-seg="principle-em-b"] .winding,
+#app[data-step="force"] .winding,
 #app[data-step="3"] .winding,
+#app[data-step="stuck"] .winding,
 #app[data-step="comm"] .winding,
 #app[data-explode="together"] .winding {
   filter: drop-shadow(0 0 6px rgba(255, 209, 92, 0.95));
 }
+
+#app[data-view="explode"] .coil-magnet,
+#app[data-view="explode"] .magnet-aura,
+#app[data-view="explode"] .stuck-hint,
+#app[data-view="explode"] .keep-hint,
+#app[data-view="explode"] .flip-hint,
+#app[data-view="explode"] .no-magnet-hint,
+#app[data-view="explode"] .wire-arrows,
+#app[data-view="explode"] .brush-spark,
+#app[data-view="explode"] .label-e-magnet { opacity: 0 !important; animation: none !important; }
 
 #btn-mute .icon-off { display: none !important; }
 #btn-mute[aria-pressed="true"] .icon-on { display: none !important; }
@@ -888,3 +1023,11 @@ button:focus-visible {
 #view-cover .hero-title,
 #view-cover .hero-sub,
 #view-cover .cta-row { flex: 0 0 auto; }
+
+/* 线圈标签已移到外壳之上，拆开时仍跟着线圈上移 */
+#app[data-explode="coil"] .label-coil,
+#app[data-explode="shaft"] .label-coil { transform: translate(0, -78px); }
+@media (max-width: 560px) {
+  #app[data-explode="coil"] .label-coil,
+  #app[data-explode="shaft"] .label-coil { transform: translate(0, -70px); }
+}
