@@ -16,7 +16,10 @@
     "principle-0": { view: "principle", step: "0" },
     "principle-1": { view: "principle", step: "1" },
     "principle-2": { view: "principle", step: "2" },
+    "principle-em": { view: "principle", step: "em" },
+    "principle-force": { view: "principle", step: "force" },
     "principle-3": { view: "principle", step: "3" },
+    "principle-stuck": { view: "principle", step: "stuck" },
     "principle-comm": { view: "principle", step: "comm" },
     "explode-0": { view: "explode", explode: "0" },
     "explode-shell": { view: "explode", explode: "shell" },
@@ -92,9 +95,14 @@
       if (el) el.classList.add("is-on");
     }
 
+    const stepChip = (step) => {
+      if (step === "2" || step === "em") return "em";
+      if (step === "stuck" || step === "comm") return "comm";
+      return step || "";
+    };
     $$(".chip").forEach((c) => {
       const on =
-        (vis.view === "principle" && c.dataset.step === vis.step) ||
+        (vis.view === "principle" && c.dataset.step === stepChip(vis.step)) ||
         (vis.view === "explode" && c.dataset.explode === vis.explode);
       c.classList.toggle("is-on", !!on);
     });
@@ -394,7 +402,13 @@
   $$(".chip[data-step]").forEach((chip) => {
     chip.addEventListener("click", () => {
       state.mode = "explore";
-      const map = { "0": "principle-intro", "1": "principle-1a", "2": "principle-2a", "3": "principle-3a", comm: "commutator" };
+      const map = {
+        "1": "principle-1a",
+        em: "principle-2a",
+        force: "principle-force-a",
+        "3": "principle-3",
+        comm: "principle-stuck",
+      };
       const id = map[chip.dataset.step];
       if (id) playIndex(storyIds.indexOf(id), { exploreOneGroup: true });
     });
