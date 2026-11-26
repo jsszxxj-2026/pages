@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#fff9ed">
+<title>小马达，转起来！</title>
+<link rel="stylesheet" href="styles.css">
+<script defer src="assets/subtitles/timeline.js"></script>
+<script defer src="art.js"></script>
+<script defer src="app.js"></script>
+</head>
+<body>
+<header class="masthead page">
+  <div class="brand"><span class="brand-icon" aria-hidden="true">✳</span><span>小小机械绘本</span></div>
+  <div class="top-actions">
+    <button class="sound button" id="sound" type="button" aria-pressed="false"><span id="sound-icon" aria-hidden="true">♪</span><span id="sound-label">声音开</span></button>
+    <button class="story button" id="story" type="button" aria-pressed="false"><span id="story-icon" aria-hidden="true">▶</span><span id="story-label">自动讲解</span></button>
+  </div>
+</header>
+
+<main class="page">
+  <nav class="chapters" aria-label="绘本章节">
+    <button class="chapter" type="button" data-chapter="0" aria-current="step"><span aria-hidden="true">01</span>找找马达</button>
+    <button class="chapter" type="button" data-chapter="1"><span aria-hidden="true">02</span>它怎么转</button>
+    <button class="chapter" type="button" data-chapter="2"><span aria-hidden="true">03</span>拆开看看</button>
+  </nav>
+
+  <section class="spread" aria-labelledby="title">
+    <div class="intro">
+      <p id="eyebrow" class="eyebrow">给兜兜和融融</p>
+      <h1 id="title">小马达，<br><em>转起来！</em></h1>
+      <p id="description" class="description">玩具会跑，风扇会吹风。<br>有个小家伙，藏在里面转呀转！</p>
+      <button id="listen" class="listen button" type="button"><span id="listen-icon" aria-hidden="true">▶</span><span id="listen-label">听一听</span></button>
+    </div>
+
+    <figure class="picture" id="picture" data-chapter="0">
+      <div class="artboard">
+        <div class="stage-tag" id="stage-tag">电动玩具车</div>
+        <canvas id="stage" role="img" aria-label="透过玩具车上的小窗，可以看到转动的马达。"></canvas>
+        <div class="stage-index" id="stage-index" aria-hidden="true">01 / 06</div>
+      </div>
+      <figcaption class="subtitle">
+        <span class="caption-icon" aria-hidden="true">❝</span>
+        <div class="caption-lines" id="captions" aria-label="中文字幕"></div>
+      </figcaption>
+    </figure>
+  </section>
+
+  <section class="picker" aria-labelledby="picker-title">
+    <div class="picker-heading">
+      <h2 id="picker-title">马达躲在哪里？</h2>
+      <span id="picker-hint">点一点，找一找</span>
+    </div>
+    <div class="cards" id="cards"></div>
+    <p class="message" id="message" role="status"></p>
+  </section>
+</main>
+<audio id="voice" preload="auto" src="assets/audio/car.mp3"></audio>
+<noscript>请开启 JavaScript，才能播放这个互动绘本。</noscript>
+</body>
+</html>
